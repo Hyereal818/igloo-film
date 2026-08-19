@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- 구글 영문 폰트 및 프리텐다드 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* 로컬 꾸불림체 폰트 로드 */
         @font-face {
             font-family: 'KugleimLocal';
             src: url('kugleim.otf') format('opentype'),
@@ -39,20 +37,6 @@
             height: 100vh;
         }
 
-        /* ❄️ 눈 내리는 캔버스 */
-        #snow-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 150;
-            opacity: 0.95;
-            transition: opacity 0.4s ease;
-        }
-
-        #snow-canvas.hidden {
-            opacity: 0;
-        }
-
         /* ==============================================
            1. 이글루 내부 화면 (Inside.png)
            ============================================== */
@@ -74,7 +58,6 @@
             transform: scale(1);
         }
 
-        /* 상단 헤더 */
         .header {
             width: 100%;
             padding: 30px 60px;
@@ -86,11 +69,10 @@
             z-index: 20;
         }
 
-        /* 이글루 아이콘 + 꾸불림체 로고 */
         .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
             color: #ffffff;
             font-size: 24px;
@@ -104,16 +86,11 @@
             opacity: 0.9;
         }
 
-        /* 이글루 형태가 명확한 SVG 아이콘 */
+        /* 좌측 입구 + 레퍼런스 스타일 벽돌 이글루 아이콘 */
         .logo-igloo-icon {
-            width: 27px;
-            height: 27px;
-            fill: none;
-            stroke: #ffffff;
-            stroke-width: 1.7;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+            width: 28px;
+            height: 28px;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
         }
 
         .nav-links {
@@ -409,7 +386,7 @@
             transform: scale(1.15);
         }
 
-        /* 우측 하단 은은한 작품 소개 영역 */
+        /* 우측 하단 작품 소개 카드 */
         .side-info-card {
             position: absolute;
             bottom: 40px;
@@ -479,14 +456,11 @@
         }
 
         /* ==============================================
-           2. 랜딩 화면 (바깥 세상)
+           2. 랜딩 화면 (바깥 세상) - 배경 영상(igloo.mp4) 적용
            ============================================== */
         .hero-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('igloo_3.png');
-            background-size: cover;
-            background-position: center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -497,12 +471,27 @@
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.9s cubic-bezier(0.7, 0, 0.2, 1);
             opacity: 1;
             pointer-events: auto;
+            overflow: hidden;
+        }
+
+        /* 첫 화면 배경 비디오 */
+        .hero-bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: -2;
         }
 
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.1) 0%, rgba(11, 17, 32, 0.55) 100%);
+            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.05) 0%, rgba(11, 17, 32, 0.45) 100%);
             z-index: -1;
         }
 
@@ -658,23 +647,27 @@
 </head>
 <body>
 
-    <!-- ❄️ 눈 내리는 캔버스 -->
-    <canvas id="snow-canvas"></canvas>
-
     <!-- 1. 이글루 내부 화면 (Inside.png) -->
     <div class="main-app" id="mainApp">
         <header class="header">
-            <!-- 돔/입구/블록이 명확히 표현된 이글루 아이콘 + 로고 -->
             <a href="#" class="logo">
-                <svg class="logo-igloo-icon" viewBox="0 0 32 32">
-                    <!-- 외부 돔 및 바닥선 -->
-                    <path d="M4 25H28"/>
-                    <path d="M5 25C5 14.5 10 7 16 7C22 7 27 14.5 27 25"/>
-                    <!-- 이글루 입구 아치 -->
-                    <path d="M11.5 25V18C11.5 16 13.5 14.5 16 14.5C18.5 14.5 20.5 16 20.5 18V25"/>
-                    <!-- 얼음 블록 결 라인 -->
-                    <path d="M8 17.5C10.5 16.5 14 16 16 16C18 16 21.5 16.5 24 17.5"/>
-                    <path d="M10.5 12C12.5 11.2 14.2 11 16 11C17.8 11 19.5 11.2 21.5 12"/>
+                <!-- 레퍼런스 스타일 좌측 입구 벽돌 이글루 아이콘 -->
+                <svg class="logo-igloo-icon" viewBox="0 0 40 32" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- 하단 지면선 -->
+                    <line x1="2" y1="28" x2="38" y2="28" />
+                    <!-- 좌측 입구 아치 및 내부 터널 -->
+                    <path d="M5 28V20C5 17 7.5 15 11 15C14.5 15 17 17 17 20V28" />
+                    <path d="M8 28V21.5C8 19.5 9.3 18.5 11 18.5C12.7 18.5 14 19.5 14 21.5V28" />
+                    <!-- 메인 돔 외곽선 (입구 뒤편 연결) -->
+                    <path d="M16 15.5C18 9 23 4 29 4C34.5 4 38 14 38 28" />
+                    <!-- 얼음 벽돌 가로줄 -->
+                    <path d="M17 19.5H38" />
+                    <path d="M21 11.5H36" />
+                    <!-- 얼음 벽돌 세로 연결선 -->
+                    <line x1="25" y1="19.5" x2="25" y2="28" />
+                    <line x1="32" y1="19.5" x2="32" y2="28" />
+                    <line x1="28" y1="11.5" x2="28" y2="19.5" />
+                    <line x1="29" y1="4" x2="29" y2="11.5" />
                 </svg>
                 <span>IGLOO FILM</span>
             </a>
@@ -747,8 +740,11 @@
         <div class="footer-spacer"></div>
     </div>
 
-    <!-- 2. 랜딩 화면 (바깥 세상) -->
+    <!-- 2. 랜딩 화면 (바깥 세상) - igloo.mp4 비디오 배경 -->
     <div class="hero-screen" id="heroScreen">
+        <video class="hero-bg-video" autoplay muted loop playsinline id="heroBgVideo">
+            <source src="igloo.mp4" type="video/mp4">
+        </video>
         <div class="hero-overlay"></div>
 
         <div class="hero-title-box">
@@ -769,69 +765,29 @@
     </div>
 
     <script>
-        // ❄️ 1. 눈 내리기 효과
-        const canvas = document.getElementById('snow-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const flakes = [];
-        for (let i = 0; i < 70; i++) {
-            flakes.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 4 + 1.5,
-                d: Math.random() * 1.2 + 0.6,
-                alpha: Math.random() * 0.5 + 0.5
-            });
-        }
-
-        function drawSnow() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            flakes.forEach(f => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
-                ctx.beginPath();
-                ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
-                ctx.fill();
-
-                f.y += Math.pow(f.d, 2) * 0.3 + 0.6;
-                f.x += Math.sin(f.y / 30) * 0.5;
-                if (f.y > canvas.height) {
-                    f.y = -10;
-                    f.x = Math.random() * canvas.width;
-                }
-            });
-            requestAnimationFrame(drawSnow);
-        }
-        drawSnow();
-
-        // 🎬 2. 화면 전환 로직
+        // 🎬 화면 전환 로직
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
+        const heroBgVideo = document.getElementById('heroBgVideo');
         const mainApp = document.getElementById('mainApp');
         const exitBtn = document.getElementById('exitOutsideBtn');
         const video = document.getElementById('hologramVideo');
 
         enterBtn.addEventListener('click', () => {
-            canvas.classList.add('hidden');
             heroScreen.classList.add('suck-in');
             mainApp.classList.add('active');
+            if(heroBgVideo) heroBgVideo.pause();
             if(video && currentTab === 'works') video.play();
         });
 
         exitBtn.addEventListener('click', () => {
             mainApp.classList.remove('active');
             heroScreen.classList.remove('suck-in');
-            canvas.classList.remove('hidden');
+            if(heroBgVideo) heroBgVideo.play();
             if(video) video.pause();
         });
 
-        // 🔀 3. Philosophy ⇄ Works 탭 전환
+        // 🔀 Philosophy ⇄ Works 탭 전환
         const navPhilosophy = document.getElementById('navPhilosophy');
         const navWorks = document.getElementById('navWorks');
         const viewPhilosophy = document.getElementById('viewPhilosophy');
@@ -886,7 +842,7 @@
         prevBtn.addEventListener('click', toggleTab);
         nextBtn.addEventListener('click', toggleTab);
 
-        // 🎛️ 4. 영상 컨트롤러 로직
+        // 🎛️ Works 비디오 컨트롤러 로직
         const playPauseBtn = document.getElementById('videoPlayPauseBtn');
         const muteBtn = document.getElementById('videoMuteBtn');
 
