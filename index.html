@@ -32,193 +32,27 @@
             font-family: var(--font-sans);
             background-color: #0b1120;
             color: #ffffff;
-            overflow-x: hidden;
-            min-height: 100vh;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* ❄️ 눈 내리는 캔버스 (화면 전환 시 페이드아웃) */
+        /* ❄️ 눈 내리는 캔버스 (전환 즉시 부드럽게 소멸) */
         #snow-canvas {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none;
-            z-index: 10;
+            z-index: 150;
             opacity: 0.95;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.4s ease;
         }
 
-        /* 내부 입장 시 눈 효과 숨김 */
         #snow-canvas.hidden {
             opacity: 0;
         }
 
         /* ==============================================
-           1. 랜딩 화면 (바깥 세상)
-           ============================================== */
-        .hero-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('igloo_3.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 20px;
-            z-index: 100;
-            transform-origin: 50% 61%; /* 이글루 입구 중심으로 줌인/줌아웃 기준점 설정 */
-            transition: transform 1.4s cubic-bezier(0.7, 0, 0.2, 1), opacity 1s ease;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.1) 0%, rgba(11, 17, 32, 0.55) 100%);
-            z-index: -1;
-        }
-
-        /* 🎬 이글루 입구로 깊숙이 빨려 들어가는 줌인 전환 효과 */
-        .hero-screen.suck-in {
-            transform: scale(6.5);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* 상단 타이틀 영역 */
-        .hero-title-box {
-            text-align: center;
-            z-index: 2;
-            margin-top: 12vh;
-            padding: 0 20px;
-            transition: opacity 0.5s ease;
-        }
-
-        .hero-screen.suck-in .hero-title-box,
-        .hero-screen.suck-in .portal-btn-wrapper,
-        .hero-screen.suck-in .hero-footer-text {
-            opacity: 0;
-        }
-
-        /* 윗줄: 꾸불림체 */
-        .hero-main-text {
-            font-family: var(--font-kugleim) !important;
-            font-size: 52px;
-            font-weight: normal;
-            font-style: normal !important;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(251, 191, 36, 0.3);
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        /* 아랫줄: Cinzel 폰트 */
-        .hero-sub-text {
-            font-family: var(--font-serif);
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 4px;
-            color: #fde68a;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-        }
-
-        /* 🧊 이글루 입구 원형 얼음 버튼 래퍼 */
-        .portal-btn-wrapper {
-            position: absolute;
-            top: 61%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: opacity 0.4s ease;
-        }
-
-        /* 마우스 올렸을 때 즉시 뜨는 Welcome! 툴팁 */
-        .custom-tooltip {
-            position: absolute;
-            bottom: calc(100% + 14px);
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(251, 191, 36, 0.6);
-            color: #fef3c7;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-family: var(--font-kugleim);
-            font-size: 15px;
-            letter-spacing: 1px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(251, 191, 36, 0.3);
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.25s ease, transform 0.25s ease;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        .custom-tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 5px;
-            border-style: solid;
-            border-color: rgba(251, 191, 36, 0.6) transparent transparent transparent;
-        }
-
-        .portal-btn-wrapper:hover .custom-tooltip {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .ice-portal-btn {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1.5px solid rgba(255, 255, 255, 0.6);
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            padding-left: 4px;
-            cursor: pointer;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-            animation: floatGlow 3s infinite ease-in-out;
-        }
-
-        .portal-btn-wrapper:hover .ice-portal-btn {
-            transform: scale(1.15);
-            background: rgba(251, 191, 36, 0.3);
-            border-color: rgba(251, 191, 36, 0.95);
-            box-shadow: 0 0 50px rgba(251, 191, 36, 0.85), inset 0 0 20px rgba(255, 255, 255, 0.9);
-            color: #fef3c7;
-        }
-
-        @keyframes floatGlow {
-            0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.6); }
-        }
-
-        .hero-footer-text {
-            font-size: 13px;
-            font-weight: 300;
-            color: #94a3b8;
-            letter-spacing: 1px;
-            z-index: 2;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-            margin-bottom: 10px;
-        }
-
-        /* ==============================================
-           2. 이글루 내부 화면 (Inside.png + 홀로그램 영상)
+           1. 이글루 내부 화면 (Inside.png) - 뒤편에 상시 배치
            ============================================== */
         .main-app {
             position: fixed;
@@ -226,20 +60,16 @@
             background-image: url('Inside.png');
             background-size: cover;
             background-position: center;
-            opacity: 0;
-            transform: scale(0.92);
-            pointer-events: none;
-            transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 1s ease;
-            z-index: 50;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transform: scale(0.95);
+            transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1);
         }
 
         .main-app.active {
-            opacity: 1;
             transform: scale(1);
-            pointer-events: auto;
         }
 
         .header {
@@ -322,6 +152,172 @@
             height: 40px;
         }
 
+        /* ==============================================
+           2. 랜딩 화면 (바깥 세상) - 전면에 배치되어 전환 시 확대 및 페이드아웃
+           ============================================== */
+        .hero-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('igloo_3.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+            z-index: 100;
+            transform-origin: 50% 61%; /* 입구 중심 확대 */
+            transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.1) 0%, rgba(11, 17, 32, 0.55) 100%);
+            z-index: -1;
+        }
+
+        /* 🎬 줌인 전환 클래스 */
+        .hero-screen.suck-in {
+            transform: scale(7.5);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .hero-title-box {
+            text-align: center;
+            z-index: 2;
+            margin-top: 12vh;
+            padding: 0 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-screen.suck-in .hero-title-box,
+        .hero-screen.suck-in .portal-btn-wrapper,
+        .hero-screen.suck-in .hero-footer-text {
+            opacity: 0;
+        }
+
+        /* ⭐️ 윗줄: Come in, Melt a little. */
+        .hero-main-text {
+            font-family: var(--font-kugleim) !important;
+            font-size: 52px;
+            font-weight: normal;
+            font-style: normal !important;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(251, 191, 36, 0.3);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        /* 아랫줄: Igloo Film */
+        .hero-sub-text {
+            font-family: var(--font-serif);
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            color: #fde68a;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 🧊 이글루 입구 원형 얼음 버튼 래퍼 */
+        .portal-btn-wrapper {
+            position: absolute;
+            top: 61%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-tooltip {
+            position: absolute;
+            bottom: calc(100% + 14px);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(251, 191, 36, 0.6);
+            color: #fef3c7;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-family: var(--font-kugleim);
+            font-size: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(251, 191, 36, 0.3);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .custom-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(251, 191, 36, 0.6) transparent transparent transparent;
+        }
+
+        .portal-btn-wrapper:hover .custom-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ice-portal-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            padding-left: 4px;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            animation: floatGlow 3s infinite ease-in-out;
+        }
+
+        .portal-btn-wrapper:hover .ice-portal-btn {
+            transform: scale(1.15);
+            background: rgba(251, 191, 36, 0.3);
+            border-color: rgba(251, 191, 36, 0.95);
+            box-shadow: 0 0 50px rgba(251, 191, 36, 0.85), inset 0 0 20px rgba(255, 255, 255, 0.9);
+            color: #fef3c7;
+        }
+
+        @keyframes floatGlow {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.6); }
+        }
+
+        .hero-footer-text {
+            font-size: 13px;
+            font-weight: 300;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            margin-bottom: 10px;
+        }
+
         @media (max-width: 768px) {
             .hero-main-text { font-size: 34px; }
             .hero-sub-text { font-size: 12px; letter-spacing: 2px; }
@@ -335,29 +331,7 @@
     <!-- ❄️ 눈 내리는 캔버스 -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- 1. 랜딩 화면 (바깥 세상) -->
-    <div class="hero-screen" id="heroScreen">
-        <div class="hero-overlay"></div>
-
-        <div class="hero-title-box">
-            <h1 class="hero-main-text">Come in. Melt a little</h1>
-            <p class="hero-sub-text">Igloo Film</p>
-        </div>
-
-        <!-- 커스텀 Welcome! 말풍선이 달린 얼음 버튼 -->
-        <div class="portal-btn-wrapper">
-            <div class="custom-tooltip">Welcome!</div>
-            <div class="ice-portal-btn" id="enterPortalBtn">
-                <i class="fa-solid fa-play"></i>
-            </div>
-        </div>
-
-        <div class="hero-footer-text">
-            아이콘을 눌러 이글루 안으로 입장하세요
-        </div>
-    </div>
-
-    <!-- 2. 이글루 내부 화면 -->
+    <!-- 1. 이글루 내부 화면 (배경에 상시 대기) -->
     <div class="main-app" id="mainApp">
         <header class="header">
             <a href="#" class="logo">
@@ -382,6 +356,27 @@
         </div>
 
         <div class="footer-spacer"></div>
+    </div>
+
+    <!-- 2. 랜딩 화면 (바깥 세상) -->
+    <div class="hero-screen" id="heroScreen">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-title-box">
+            <h1 class="hero-main-text">Come in, Melt a little.</h1>
+            <p class="hero-sub-text">Igloo Film</p>
+        </div>
+
+        <div class="portal-btn-wrapper">
+            <div class="custom-tooltip">Welcome!</div>
+            <div class="ice-portal-btn" id="enterPortalBtn">
+                <i class="fa-solid fa-play"></i>
+            </div>
+        </div>
+
+        <div class="hero-footer-text">
+            아이콘을 눌러 이글루 안으로 입장하세요
+        </div>
     </div>
 
     <script>
@@ -425,27 +420,24 @@
         }
         drawSnow();
 
-        // 🎬 시네마틱 줌인/줌아웃 전환 & 눈 효과 토글
+        // 🎬 매끄러운 줌인/줌아웃 전환 로직
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
         const mainApp = document.getElementById('mainApp');
         const exitBtn = document.getElementById('exitOutsideBtn');
 
-        // 이글루 안으로 들어가기 (줌인 & 눈 멈춤)
+        // 입장: 바깥 화면이 줌인되며 바로 뒷배경인 실내가 드러남
         enterBtn.addEventListener('click', () => {
-            heroScreen.classList.add('suck-in');
-            canvas.classList.add('hidden'); // 실내 진입 시 눈 효과 제거
-            setTimeout(() => {
-                mainApp.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 600);
+            canvas.classList.add('hidden'); // 눈 즉시 페이드아웃
+            heroScreen.classList.add('suck-in'); // 바깥 화면 확대 페이드아웃
+            mainApp.classList.add('active'); // 실내 살짝 줌인되며 정착
         });
 
-        // 눈밭으로 나가기 (반대로 줌아웃 & 눈 다시 내림)
+        // 퇴장: 다시 바깥으로 부드럽게 줌아웃 복귀
         exitBtn.addEventListener('click', () => {
             mainApp.classList.remove('active');
             heroScreen.classList.remove('suck-in');
-            canvas.classList.remove('hidden'); // 바깥으로 나오면 눈 효과 부활
+            canvas.classList.remove('hidden'); // 눈 다시 내림
         });
     </script>
 </body>
