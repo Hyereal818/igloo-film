@@ -86,10 +86,14 @@
             opacity: 0.9;
         }
 
-        /* ⭐️ 2번째 레퍼런스 완벽 재현 솔리드 3D 이글루 아이콘 */
         .logo-igloo-icon {
             width: 26px;
             height: 26px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
         }
 
@@ -375,16 +379,19 @@
             transform: scale(1.15);
         }
 
-        /* ⭐️ 버튼과 안 겹치는 위치 + 여유로운 우측 슬라이드인 페이드 모션 */
+        /* 우측 영상 소개 카드 */
         .side-info-card {
             position: absolute;
-            left: calc(50% + 280px); /* 화살표 버튼 바깥쪽으로 완벽 분리 */
-            bottom: 50px;
-            max-width: 360px;
-            background: transparent;
-            border: none;
-            padding: 0;
-            box-shadow: none;
+            left: calc(50% + 280px);
+            bottom: 45px;
+            max-width: 380px;
+            padding: 22px 26px;
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.38);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             z-index: 25;
             text-align: left;
             opacity: 0;
@@ -401,12 +408,12 @@
         }
 
         .side-accent-line {
-            width: 110px;
-            height: 8px;
+            width: 90px;
+            height: 6px;
             border-top: 1.5px solid rgba(255, 255, 255, 0.7);
             border-left: 1.5px solid rgba(255, 255, 255, 0.7);
             transform: skewX(-35deg);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .side-info-title {
@@ -423,7 +430,7 @@
             font-family: var(--font-sans);
             font-size: 13.5px;
             font-weight: 400;
-            color: rgba(255, 255, 255, 0.88);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.7;
             word-break: keep-all;
             text-shadow: none;
@@ -458,7 +465,7 @@
             align-items: center;
             padding: 40px 20px;
             z-index: 100;
-            transform-origin: 50% 61%;
+            transform-origin: 50% 67%;
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.9s cubic-bezier(0.7, 0, 0.2, 1);
             opacity: 1;
             pointer-events: auto;
@@ -517,7 +524,6 @@
             line-height: 1.2;
         }
 
-        /* ⭐️ 원래의 웜 골드/옐로우 톤으로 원복 */
         .hero-sub-text {
             font-family: var(--font-en-clean);
             font-size: 16px;
@@ -530,7 +536,7 @@
 
         .portal-btn-wrapper {
             position: absolute;
-            top: 61%;
+            top: 67%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 5;
@@ -610,14 +616,15 @@
             50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.6); }
         }
 
+        /* ⭐️ 수정된 하단 안내 문구 스타일 */
         .hero-footer-text {
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 300;
-            color: #94a3b8;
-            letter-spacing: 1px;
+            color: #cbd5e1;
+            letter-spacing: 0.8px;
             z-index: 2;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-            margin-bottom: 10px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+            margin-bottom: 12px;
         }
 
         @media (max-width: 1024px) {
@@ -644,6 +651,7 @@
             .hologram-nav-btn { width: 38px; height: 38px; font-size: 14px; }
             .philosophy-title { font-size: 19px; }
             .philosophy-desc { font-size: 13px; }
+            .hero-footer-text { font-size: 12px; }
         }
     </style>
 </head>
@@ -653,19 +661,11 @@
     <div class="main-app" id="mainApp">
         <header class="header">
             <a href="#" class="logo">
-                <!-- ⭐️ 2번째 첨부 레퍼런스 스타일 솔리드 이글루 아이콘 -->
-                <svg class="logo-igloo-icon" viewBox="0 0 32 32" fill="#ffffff">
-                    <!-- 메인 돔 블록 -->
-                    <path d="M16 4C9.5 4 4.5 9.5 4 16H9.5C9.8 11.5 12.5 9 16 9C19.5 9 22.2 11.5 22.5 16H28C27.5 9.5 22.5 4 16 4Z"/>
-                    <path d="M3.7 18C3.8 19.4 4.1 20.7 4.6 22H11.5V18H3.7Z"/>
-                    <path d="M13.5 18V22H20.5V18H13.5Z"/>
-                    <path d="M22.5 18V22H27.4C27.9 20.7 28.2 19.4 28.3 18H22.5Z"/>
-                    <path d="M6 24C7 26 8.5 27.5 10.5 28.5H12V24H6Z"/>
-                    <path d="M14 24V28.8C14.7 28.9 15.3 29 16 29C16.7 29 17.3 28.9 18 28.8V24H14Z"/>
-                    <path d="M20 24V28.5C22 27.5 23.5 26 24.5 24H20Z"/>
-                    <!-- 3D 돌출 터널 입구 -->
-                    <path d="M8 17C6 17 4.5 18.5 4.5 21V28.5H7.5V22C7.5 21.2 8.2 20.5 9 20.5C9.8 20.5 10.5 21.2 10.5 22V28.5H13.5V21C13.5 18.5 11 17 8 17Z"/>
-                    <path d="M13.5 21.5V28.5H15.5V20C15 20.5 14.2 21 13.5 21.5Z"/>
+                <svg class="logo-igloo-icon" viewBox="0 0 24 24">
+                    <path d="M3 19C3 11 7 5 12 5C17 5 21 11 21 19H3Z"/>
+                    <path d="M8.5 19V14C8.5 12.5 10 11.5 12 11.5C14 11.5 15.5 12.5 15.5 14V19"/>
+                    <path d="M5.5 12C7.5 10 16.5 10 18.5 12"/>
+                    <line x1="12" y1="5" x2="12" y2="11.5"/>
                 </svg>
                 <span>IGLOO FILM</span>
             </a>
@@ -722,7 +722,7 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <!-- ⭐️ 우측 작품 소개글 (버튼 바깥쪽 배치 + 부드러운 페이드인 모션) -->
+            <!-- 우측 영상 소개 카드 -->
             <div class="side-info-card" id="sideInfoCard">
                 <div class="side-accent-line"></div>
                 <div class="side-info-title">왕과 사는 남이섬(2026)</div>
@@ -757,16 +757,22 @@
             </div>
         </div>
 
+        <!-- ⭐️ 수정된 하단 문구 -->
         <div class="hero-footer-text">
-            아이콘을 눌러 이글루 안으로 입장하세요
+            재생 버튼을 누르시면 이글루 속으로 입장합니다
         </div>
     </div>
 
     <script>
+        // 🎬 첫 화면 배경 영상 80% 속도
+        const heroBgVideo = document.getElementById('heroBgVideo');
+        if (heroBgVideo) {
+            heroBgVideo.playbackRate = 0.8;
+        }
+
         // 🎬 화면 전환 로직
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
-        const heroBgVideo = document.getElementById('heroBgVideo');
         const mainApp = document.getElementById('mainApp');
         const exitBtn = document.getElementById('exitOutsideBtn');
         const video = document.getElementById('hologramVideo');
@@ -781,7 +787,10 @@
         exitBtn.addEventListener('click', () => {
             mainApp.classList.remove('active');
             heroScreen.classList.remove('suck-in');
-            if(heroBgVideo) heroBgVideo.play();
+            if(heroBgVideo) {
+                heroBgVideo.play();
+                heroBgVideo.playbackRate = 0.8;
+            }
             if(video) video.pause();
         });
 
