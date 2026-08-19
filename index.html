@@ -465,7 +465,7 @@
             align-items: center;
             padding: 40px 20px;
             z-index: 100;
-            transform-origin: 50% 67%;
+            transform-origin: 50% 63%; /* 줌인 기준점을 버튼 위치와 동일하게 63%로 맞춤 */
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.9s cubic-bezier(0.7, 0, 0.2, 1);
             opacity: 1;
             pointer-events: auto;
@@ -534,9 +534,10 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
+        /* 입구 정중앙에 꼭 맞춘 재생 버튼 위치 (top: 63%) */
         .portal-btn-wrapper {
             position: absolute;
-            top: 67%;
+            top: 63%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 5;
@@ -616,7 +617,6 @@
             50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.6); }
         }
 
-        /* ⭐️ 수정된 하단 안내 문구 스타일 */
         .hero-footer-text {
             font-size: 13.5px;
             font-weight: 300;
@@ -757,7 +757,6 @@
             </div>
         </div>
 
-        <!-- ⭐️ 수정된 하단 문구 -->
         <div class="hero-footer-text">
             재생 버튼을 누르시면 이글루 속으로 입장합니다
         </div>
