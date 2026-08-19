@@ -4,24 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- 구글 폰트 (2번째 줄 Igloo Film용) -->
+    <!-- 영문 포함 꾸불림체 웹폰트 로드 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/BMKUGLEIM/BMKUGLEIM.css" type="text/css"/>
+    <!-- Igloo Film용 영문 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* 1. 우아한형제들 꾸불림체 공식 웹폰트 정의 */
-        @font-face {
-            font-family: 'BMKUGLEIM';
-            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/BMKUGLEIM.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --font-kugleim: 'BMKUGLEIM', sans-serif;
             --font-serif: 'Cinzel', serif;
             --font-sans: 'Montserrat', sans-serif;
         }
@@ -80,18 +73,19 @@
             padding: 0 20px;
         }
 
-        /* 윗줄: 진짜 꾸불림체 적용 */
+        /* 윗줄: 꾸불림체 강제 적용 (!important) */
         .hero-main-text {
-            font-family: var(--font-kugleim);
-            font-size: 48px;
+            font-family: 'BMKUGLEIM', 'BM Kugleim', cursive !important;
+            font-size: 52px;
             font-weight: normal;
+            letter-spacing: 0.5px;
             color: #ffffff;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(251, 191, 36, 0.3);
             margin-bottom: 8px;
             line-height: 1.2;
         }
 
-        /* 아랫줄: 원래 폰트 유지 */
+        /* 아랫줄: Cinzel 폰트 유지 */
         .hero-sub-text {
             font-family: var(--font-serif);
             font-size: 15px;
@@ -128,7 +122,6 @@
             animation: floatGlow 3s infinite ease-in-out;
         }
 
-        /* 마우스 올렸을 때 원형 그대로 불빛만 환하게 점등 */
         .ice-portal-btn:hover {
             transform: translate(-50%, -50%) scale(1.15);
             background: rgba(251, 191, 36, 0.3);
@@ -277,7 +270,6 @@
             <p class="hero-sub-text">Igloo Film</p>
         </div>
 
-        <!-- 툴팁 문구를 'Welcome!'으로 설정한 원형 얼음 버튼 -->
         <div class="ice-portal-btn" id="enterPortalBtn" title="Welcome!">
             <i class="fa-solid fa-play"></i>
         </div>
@@ -315,7 +307,6 @@
     </div>
 
     <script>
-        // ❄️ 눈 내리기 효과
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -356,7 +347,6 @@
         }
         drawSnow();
 
-        // 🎬 페이지 전환 효과
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
         const mainApp = document.getElementById('mainApp');
