@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- 구글 영문 폰트 -->
+    <!-- 구글 영문 폰트 및 프리텐다드(깔끔한 고딕) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500;600&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* ⭐️ 로컬에 업로드한 꾸불림체 폰트 로드 */
+        /* ⭐️ 로컬 꾸불림체 폰트 로드 */
         @font-face {
             font-family: 'KugleimLocal';
             src: url('kugleim.otf') format('opentype'),
@@ -25,8 +26,8 @@
         :root {
             --font-kugleim: 'KugleimLocal', cursive, sans-serif;
             --font-serif: 'Cinzel', serif;
-            --font-sans: 'Montserrat', sans-serif;
-            --font-kor: 'Gowun Batang', serif;
+            --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-title: 'Gowun Batang', serif;
         }
 
         body {
@@ -73,7 +74,7 @@
             transform: scale(1);
         }
 
-        /* 완전 투명 상단 헤더 */
+        /* 투명 상단 헤더 */
         .header {
             width: 100%;
             padding: 30px 60px;
@@ -82,12 +83,9 @@
             align-items: center;
             background: transparent;
             border-bottom: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
             z-index: 20;
         }
 
-        /* ⭐️ 좌측 상단 로고: 꾸불림체 + 순백색 + 점 제거 */
         .logo {
             text-decoration: none;
             color: #ffffff;
@@ -102,7 +100,6 @@
             opacity: 0.9;
         }
 
-        /* ⭐️ 상단 네비게이션 메뉴 */
         .nav-links {
             display: flex;
             gap: 40px;
@@ -114,7 +111,7 @@
             background: none;
             border: none;
             color: rgba(255, 255, 255, 0.55);
-            font-family: var(--font-sans);
+            font-family: 'Montserrat', sans-serif;
             font-size: 15px;
             letter-spacing: 2px;
             cursor: pointer;
@@ -128,7 +125,6 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* ⭐️ 활성화 시: 흰색 텍스트 + 영롱하게 빛나는 흰색 외곽선 글로우 효과 */
         .nav-link-btn.active {
             color: #ffffff;
             font-weight: 600;
@@ -215,11 +211,9 @@
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
+        /* ⭐️ 자동 크기 전환 지원 홀로그램 패널 */
         .hologram-panel {
             position: relative;
-            width: 660px;
-            max-width: 72vw;
-            aspect-ratio: 16/9;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 16px;
@@ -229,6 +223,28 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(251, 191, 36, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.25);
             animation: hologramFloat 4.5s ease-in-out infinite;
             transform: rotateX(6deg);
+            
+            /* 가로 ↔ 세로 크기 전환 애니메이션 */
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        height 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        aspect-ratio 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 1. Philosophy 모드일 때 (가로형) */
+        .hologram-panel.mode-philosophy {
+            width: 660px;
+            max-width: 72vw;
+            aspect-ratio: 16/9;
+            height: auto;
+        }
+
+        /* 2. Works 모드일 때 (세로형 9:16 영상 맞춤) */
+        .hologram-panel.mode-works {
+            width: 320px;
+            max-width: 80vw;
+            height: 568px;
+            max-height: 68vh;
+            aspect-ratio: 9/16;
         }
 
         .hologram-panel::after {
@@ -254,10 +270,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 30px 40px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.4s ease, transform 0.4s ease;
             transform: scale(0.96);
             z-index: 3;
         }
@@ -268,50 +283,73 @@
             transform: scale(1);
         }
 
-        /* 1. Philosophy 뷰 */
+        /* ⭐️ 1. Philosophy 뷰 (수정된 텍스트 및 고딕 폰트) */
         .philosophy-view {
             text-align: center;
+            padding: 30px 40px;
             color: #ffffff;
         }
 
         .philosophy-tag {
-            font-family: var(--font-sans);
+            font-family: 'Montserrat', sans-serif;
             font-size: 12px;
             letter-spacing: 4px;
             color: #fde68a;
             text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .philosophy-title {
-            font-family: var(--font-kor);
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 1.5;
-            color: #ffffff;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
             margin-bottom: 14px;
         }
 
+        .philosophy-title {
+            font-family: var(--font-title);
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #ffffff;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+            margin-bottom: 22px;
+            word-break: keep-all;
+        }
+
+        /* ⭐️ '차가운 현실' 연한 하늘색 포인트 */
+        .highlight-cold {
+            color: #93c5fd;
+            text-shadow: 0 0 15px rgba(147, 197, 253, 0.6);
+        }
+
+        /* ⭐️ 깔끔한 고딕체 본문 */
         .philosophy-desc {
-            font-family: var(--font-kor);
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.8;
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.9;
             max-width: 480px;
             word-break: keep-all;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
-        /* 2. Works 뷰 (영상) */
+        .philosophy-desc p {
+            margin-bottom: 8px;
+        }
+
+        .philosophy-desc .last-line {
+            margin-top: 14px;
+            color: #fef3c7;
+            font-weight: 400;
+        }
+
+        /* ⭐️ 2. Works 뷰 (세로형 영상 9:16 완벽 핏) */
         .works-view {
             padding: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .works-view video {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .footer-spacer {
@@ -485,10 +523,11 @@
             .hero-sub-text { font-size: 12px; letter-spacing: 2px; }
             .header { padding: 20px; }
             .hologram-stage-wrapper { padding: 0 10px; gap: 10px; }
-            .hologram-panel { width: 85vw; }
+            .hologram-panel.mode-philosophy { width: 85vw; }
+            .hologram-panel.mode-works { width: 280px; height: 497px; }
             .hologram-nav-btn { width: 38px; height: 38px; font-size: 14px; }
-            .philosophy-title { font-size: 18px; }
-            .philosophy-desc { font-size: 12px; }
+            .philosophy-title { font-size: 19px; }
+            .philosophy-desc { font-size: 13px; }
         }
     </style>
 </head>
@@ -499,12 +538,11 @@
 
     <!-- 1. 이글루 내부 화면 (Inside.png) -->
     <div class="main-app" id="mainApp">
-        <!-- 완전 투명 헤더 -->
+        <!-- 투명 헤더 -->
         <header class="header">
-            <!-- ⭐️ 수정된 로고: 꾸불림체 + 순백색 + 노란 점 제거 -->
             <a href="#" class="logo">IGLOO FILM</a>
 
-            <!-- ⭐️ 수정된 메뉴: 활성화 시 순백색 + 화이트 네온 글로우 외곽선 -->
+            <!-- 화이트 네온 메뉴 -->
             <ul class="nav-links">
                 <li><button class="nav-link-btn active" id="navPhilosophy">Philosophy</button></li>
                 <li><button class="nav-link-btn" id="navWorks">Works</button></li>
@@ -521,19 +559,23 @@
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <div class="hologram-panel">
-                <!-- 1. Philosophy 뷰 -->
+            <!-- ⭐️ 자동 크기 반응형 홀로그램 패널 (기본 mode-philosophy) -->
+            <div class="hologram-panel mode-philosophy" id="hologramPanel">
+                <!-- 1. Philosophy 뷰 (수정된 문구 및 스타일) -->
                 <div class="hologram-content philosophy-view active" id="viewPhilosophy">
                     <p class="philosophy-tag">Brand Philosophy</p>
-                    <h2 class="philosophy-title">차가운 현실 위에 피어난<br>따스한 상상력</h2>
-                    <p class="philosophy-desc">
-                        이글루 필름은 얼어붙은 세상 속에서도 결코 녹아내리지 않을<br>
-                        우리 모두의 아늑한 기억과 판타지를 영상으로 빚어냅니다.<br>
-                        잠시 들어와 마음을 녹이고 가세요.
-                    </p>
+                    <h2 class="philosophy-title">
+                        🧊<span class="highlight-cold">차가운 현실</span>에 따뜻함 한 스푼
+                    </h2>
+                    <div class="philosophy-desc">
+                        <p>냉정한 일상에서 지나쳤던 따스함을</p>
+                        <p>글과 영상으로 담아냅니다.</p>
+                        <p>조금은 엉뚱하고, 때로는 아련하게.</p>
+                        <p class="last-line">잠시 들어와, 마음을 녹이고 가세요.</p>
+                    </div>
                 </div>
 
-                <!-- 2. Works 뷰 (showreel.mp4 자동 연결) -->
+                <!-- 2. Works 뷰 (세로형 영상 9:16 자동 맞춤) -->
                 <div class="hologram-content works-view" id="viewWorks">
                     <video id="hologramVideo" autoplay muted loop playsinline>
                         <source src="showreel.mp4" type="video/mp4">
@@ -623,7 +665,7 @@
             canvas.classList.add('hidden');
             heroScreen.classList.add('suck-in');
             mainApp.classList.add('active');
-            if(video) video.play();
+            if(video && currentTab === 'works') video.play();
         });
 
         exitBtn.addEventListener('click', () => {
@@ -633,11 +675,12 @@
             if(video) video.pause();
         });
 
-        // 🔀 3. Philosophy ⇄ Works 탭 & 화살표 전환
+        // 🔀 3. Philosophy (가로) ⇄ Works (세로 9:16) 자동 크기 전환 탭 로직
         const navPhilosophy = document.getElementById('navPhilosophy');
         const navWorks = document.getElementById('navWorks');
         const viewPhilosophy = document.getElementById('viewPhilosophy');
         const viewWorks = document.getElementById('viewWorks');
+        const hologramPanel = document.getElementById('hologramPanel');
         const prevBtn = document.getElementById('prevSlideBtn');
         const nextBtn = document.getElementById('nextSlideBtn');
 
@@ -648,11 +691,22 @@
             if (tab === 'philosophy') {
                 navPhilosophy.classList.add('active');
                 navWorks.classList.remove('active');
+                
+                // 홀로그램 패널 크기를 가로형으로 전환
+                hologramPanel.classList.remove('mode-works');
+                hologramPanel.classList.add('mode-philosophy');
+
                 viewPhilosophy.classList.add('active');
                 viewWorks.classList.remove('active');
+                if(video) video.pause();
             } else {
                 navPhilosophy.classList.remove('active');
                 navWorks.classList.add('active');
+
+                // 홀로그램 패널 크기를 9:16 세로형으로 전환
+                hologramPanel.classList.remove('mode-philosophy');
+                hologramPanel.classList.add('mode-works');
+
                 viewPhilosophy.classList.remove('active');
                 viewWorks.classList.add('active');
                 if(video) video.play();
