@@ -72,7 +72,7 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
             color: #ffffff;
             font-size: 24px;
@@ -86,10 +86,11 @@
             opacity: 0.9;
         }
 
+        /* ⭐️ 2번째 레퍼런스 완벽 재현 솔리드 3D 이글루 아이콘 */
         .logo-igloo-icon {
-            width: 28px;
-            height: 28px;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+            width: 26px;
+            height: 26px;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
         }
 
         .nav-links {
@@ -374,11 +375,11 @@
             transform: scale(1.15);
         }
 
-        /* 우측 영상 소개글 (거리 좁힘 + 그림자 제거 + 우측 슬라이드인 모션) */
+        /* ⭐️ 버튼과 안 겹치는 위치 + 여유로운 우측 슬라이드인 페이드 모션 */
         .side-info-card {
             position: absolute;
-            left: calc(50% + 200px); /* 패널 바로 오른쪽에 가깝게 배치 */
-            bottom: 60px;
+            left: calc(50% + 280px); /* 화살표 버튼 바깥쪽으로 완벽 분리 */
+            bottom: 50px;
             max-width: 360px;
             background: transparent;
             border: none;
@@ -387,9 +388,9 @@
             z-index: 25;
             text-align: left;
             opacity: 0;
-            transform: translateX(-24px); /* 왼쪽에서 시작하여 오른쪽으로 이동 */
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-35px);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s, 
+                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
             pointer-events: none;
         }
 
@@ -415,7 +416,7 @@
             color: #ffffff;
             margin-bottom: 12px;
             letter-spacing: -0.5px;
-            text-shadow: none; /* 그림자 완전 제거 */
+            text-shadow: none;
         }
 
         .side-info-desc {
@@ -425,7 +426,7 @@
             color: rgba(255, 255, 255, 0.88);
             line-height: 1.7;
             word-break: keep-all;
-            text-shadow: none; /* 그림자 완전 제거 */
+            text-shadow: none;
         }
 
         .side-info-desc p {
@@ -516,13 +517,13 @@
             line-height: 1.2;
         }
 
-        /* 깔끔한 고딕체로 변경된 첫 페이지 IGLOO FILM */
+        /* ⭐️ 원래의 웜 골드/옐로우 톤으로 원복 */
         .hero-sub-text {
             font-family: var(--font-en-clean);
             font-size: 16px;
             font-weight: 600;
             letter-spacing: 5px;
-            color: #ffffff;
+            color: #fde68a;
             text-transform: uppercase;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
@@ -619,10 +620,10 @@
             margin-bottom: 10px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .side-info-card { 
                 left: 50%;
-                transform: translateX(-50%) translateY(15px);
+                transform: translateX(-50%) translateY(20px);
                 bottom: 15px; 
                 max-width: 85vw;
                 text-align: center;
@@ -652,17 +653,19 @@
     <div class="main-app" id="mainApp">
         <header class="header">
             <a href="#" class="logo">
-                <svg class="logo-igloo-icon" viewBox="0 0 40 32" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="2" y1="28" x2="38" y2="28" />
-                    <path d="M5 28V20C5 17 7.5 15 11 15C14.5 15 17 17 17 20V28" />
-                    <path d="M8 28V21.5C8 19.5 9.3 18.5 11 18.5C12.7 18.5 14 19.5 14 21.5V28" />
-                    <path d="M16 15.5C18 9 23 4 29 4C34.5 4 38 14 38 28" />
-                    <path d="M17 19.5H38" />
-                    <path d="M21 11.5H36" />
-                    <line x1="25" y1="19.5" x2="25" y2="28" />
-                    <line x1="32" y1="19.5" x2="32" y2="28" />
-                    <line x1="28" y1="11.5" x2="28" y2="19.5" />
-                    <line x1="29" y1="4" x2="29" y2="11.5" />
+                <!-- ⭐️ 2번째 첨부 레퍼런스 스타일 솔리드 이글루 아이콘 -->
+                <svg class="logo-igloo-icon" viewBox="0 0 32 32" fill="#ffffff">
+                    <!-- 메인 돔 블록 -->
+                    <path d="M16 4C9.5 4 4.5 9.5 4 16H9.5C9.8 11.5 12.5 9 16 9C19.5 9 22.2 11.5 22.5 16H28C27.5 9.5 22.5 4 16 4Z"/>
+                    <path d="M3.7 18C3.8 19.4 4.1 20.7 4.6 22H11.5V18H3.7Z"/>
+                    <path d="M13.5 18V22H20.5V18H13.5Z"/>
+                    <path d="M22.5 18V22H27.4C27.9 20.7 28.2 19.4 28.3 18H22.5Z"/>
+                    <path d="M6 24C7 26 8.5 27.5 10.5 28.5H12V24H6Z"/>
+                    <path d="M14 24V28.8C14.7 28.9 15.3 29 16 29C16.7 29 17.3 28.9 18 28.8V24H14Z"/>
+                    <path d="M20 24V28.5C22 27.5 23.5 26 24.5 24H20Z"/>
+                    <!-- 3D 돌출 터널 입구 -->
+                    <path d="M8 17C6 17 4.5 18.5 4.5 21V28.5H7.5V22C7.5 21.2 8.2 20.5 9 20.5C9.8 20.5 10.5 21.2 10.5 22V28.5H13.5V21C13.5 18.5 11 17 8 17Z"/>
+                    <path d="M13.5 21.5V28.5H15.5V20C15 20.5 14.2 21 13.5 21.5Z"/>
                 </svg>
                 <span>IGLOO FILM</span>
             </a>
@@ -719,7 +722,7 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <!-- 우측 영상 소개글 (수정된 텍스트 + 애니메이션 연동) -->
+            <!-- ⭐️ 우측 작품 소개글 (버튼 바깥쪽 배치 + 부드러운 페이드인 모션) -->
             <div class="side-info-card" id="sideInfoCard">
                 <div class="side-accent-line"></div>
                 <div class="side-info-title">왕과 사는 남이섬(2026)</div>
@@ -760,15 +763,10 @@
     </div>
 
     <script>
-        // 🎬 첫 화면 배경 영상 속도 0.25배속 설정
-        const heroBgVideo = document.getElementById('heroBgVideo');
-        if (heroBgVideo) {
-            heroBgVideo.playbackRate = 0.25;
-        }
-
         // 🎬 화면 전환 로직
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
+        const heroBgVideo = document.getElementById('heroBgVideo');
         const mainApp = document.getElementById('mainApp');
         const exitBtn = document.getElementById('exitOutsideBtn');
         const video = document.getElementById('hologramVideo');
@@ -783,10 +781,7 @@
         exitBtn.addEventListener('click', () => {
             mainApp.classList.remove('active');
             heroScreen.classList.remove('suck-in');
-            if(heroBgVideo) {
-                heroBgVideo.play();
-                heroBgVideo.playbackRate = 0.25;
-            }
+            if(heroBgVideo) heroBgVideo.play();
             if(video) video.pause();
         });
 
