@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- 구글 영문 폰트 및 프리텐다드(고딕) -->
+    <!-- 구글 영문 폰트 및 프리텐다드 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* ⭐️ 로컬 꾸불림체 폰트 로드 */
+        /* 로컬 꾸불림체 폰트 로드 */
         @font-face {
             font-family: 'KugleimLocal';
             src: url('kugleim.otf') format('opentype'),
@@ -74,7 +74,7 @@
             transform: scale(1);
         }
 
-        /* 투명 상단 헤더 */
+        /* 상단 헤더 */
         .header {
             width: 100%;
             padding: 30px 60px;
@@ -86,7 +86,11 @@
             z-index: 20;
         }
 
+        /* 이글루 아이콘 + 꾸불림체 로고 */
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             text-decoration: none;
             color: #ffffff;
             font-size: 24px;
@@ -98,6 +102,17 @@
 
         .logo:hover {
             opacity: 0.9;
+        }
+
+        .logo-igloo-icon {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
         }
 
         .nav-links {
@@ -173,7 +188,7 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
-        /* 🌐 홀로그램 및 좌우 네비게이션 스테이지 */
+        /* 홀로그램 스테이지 */
         .hologram-stage-wrapper {
             flex: 1;
             display: flex;
@@ -212,7 +227,6 @@
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        /* ⭐️ 9:16 세로형 & 16:9 가로형 자동 전환 홀로그램 패널 */
         .hologram-panel {
             position: relative;
             background: rgba(255, 255, 255, 0.06);
@@ -228,7 +242,6 @@
                         height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 1. Philosophy 가로 모드 */
         .hologram-panel.mode-philosophy {
             width: 660px;
             max-width: 72vw;
@@ -236,11 +249,10 @@
             max-height: 52vh;
         }
 
-        /* 2. Works 세로 9:16 정확한 비율 모드 */
         .hologram-panel.mode-works {
             height: 580px;
             max-height: 68vh;
-            width: calc(min(580px, 68vh) * 9 / 16); /* 정확한 9:16 계산 */
+            width: calc(min(580px, 68vh) * 9 / 16);
             max-width: 80vw;
         }
 
@@ -280,7 +292,7 @@
             transform: scale(1);
         }
 
-        /* ⭐️ 1. Philosophy 뷰 */
+        /* 1. Philosophy 뷰 */
         .philosophy-view {
             text-align: center;
             padding: 30px 40px;
@@ -307,17 +319,16 @@
             word-break: keep-all;
         }
 
-        /* ⭐️ 차가운 현실: 글로우 제거 + 깨끗하고 선명한 아이스 블루 */
         .text-cold {
             color: #bae6fd;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
             font-weight: 700;
         }
 
-        /* ⭐️ 따뜻함: 포근한 앰버 골드 글로우 추가 */
-        .text-warm {
-            color: #fef08a;
-            text-shadow: 0 0 14px rgba(254, 240, 138, 0.8), 0 0 24px rgba(234, 179, 8, 0.6);
+        /* 따뜻함: 흰색 텍스트 + 은은한 화이트 글로우 */
+        .text-warm-white {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 22px rgba(255, 255, 255, 0.6);
             font-weight: 700;
         }
 
@@ -342,7 +353,7 @@
             font-weight: 400;
         }
 
-        /* ⭐️ 2. Works 뷰 (영상 + 미니 컨트롤러) */
+        /* 2. Works 뷰 */
         .works-view {
             padding: 0;
             width: 100%;
@@ -357,7 +368,6 @@
             display: block;
         }
 
-        /* 영상 하단 컨트롤러 */
         .video-controls-bar {
             position: absolute;
             bottom: 12px;
@@ -399,19 +409,16 @@
             transform: scale(1.15);
         }
 
-        /* ⭐️ 우측 하단 독립된 은은한 작품 소개 카드 */
+        /* 우측 하단 미니멀 텍스트 소개 영역 (첨부 이미지 스타일) */
         .side-info-card {
             position: absolute;
-            bottom: 30px;
-            right: 60px;
-            max-width: 260px;
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 16px 20px;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            bottom: 50px;
+            right: 80px;
+            max-width: 320px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            box-shadow: none;
             z-index: 25;
             text-align: left;
             opacity: 0;
@@ -420,36 +427,41 @@
             pointer-events: none;
         }
 
-        /* Works 화면일 때만 우측 하단에 부드럽게 등장 */
         .side-info-card.show {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
 
-        .side-info-tag {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: #93c5fd;
-            text-transform: uppercase;
-            margin-bottom: 4px;
+        /* 꺾임 액센트 라인 */
+        .side-accent-line {
+            width: 140px;
+            height: 12px;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-left: 1.5px solid rgba(255, 255, 255, 0.6);
+            transform: skewX(-35deg);
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
         }
 
         .side-info-title {
-            font-family: var(--font-kugleim);
-            font-size: 18px;
-            color: #ffffff;
-            margin-bottom: 6px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            font-family: var(--font-kor, 'Pretendard');
+            font-size: 26px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
         .side-info-desc {
             font-family: var(--font-sans);
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.5;
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.6;
             word-break: keep-all;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
         }
 
         .footer-spacer {
@@ -628,7 +640,9 @@
             .hologram-nav-btn { width: 38px; height: 38px; font-size: 14px; }
             .philosophy-title { font-size: 19px; }
             .philosophy-desc { font-size: 13px; }
-            .side-info-card { right: 20px; bottom: 20px; max-width: 200px; padding: 12px; }
+            .side-info-card { right: 20px; bottom: 20px; max-width: 220px; }
+            .side-info-title { font-size: 20px; }
+            .side-info-desc { font-size: 12px; }
         }
     </style>
 </head>
@@ -640,7 +654,16 @@
     <!-- 1. 이글루 내부 화면 (Inside.png) -->
     <div class="main-app" id="mainApp">
         <header class="header">
-            <a href="#" class="logo">IGLOO FILM</a>
+            <!-- 이글루 아이콘 + 로고 -->
+            <a href="#" class="logo">
+                <svg class="logo-igloo-icon" viewBox="0 0 24 24">
+                    <path d="M3 19C3 12 7 6 12 6C17 6 21 12 21 19H3Z"/>
+                    <path d="M9 19V14C9 13 10 12 12 12C14 12 15 13 15 14V19"/>
+                    <line x1="12" y1="6" x2="12" y2="12"/>
+                    <path d="M6.5 12.5C8 10 16 10 17.5 12.5"/>
+                </svg>
+                <span>IGLOO FILM</span>
+            </a>
 
             <ul class="nav-links">
                 <li><button class="nav-link-btn active" id="navPhilosophy">Philosophy</button></li>
@@ -658,13 +681,12 @@
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <!-- ⭐️ 정확한 9:16 비율 & 16:9 반응형 패널 -->
             <div class="hologram-panel mode-philosophy" id="hologramPanel">
-                <!-- 1. Philosophy 뷰 (차가운 현실: 텍스트만 / 따뜻함: 앰버 글로우) -->
+                <!-- 1. Philosophy 뷰 -->
                 <div class="hologram-content philosophy-view active" id="viewPhilosophy">
                     <p class="philosophy-tag">Brand Philosophy</p>
                     <h2 class="philosophy-title">
-                        <span class="text-cold">차가운 현실</span>에 <span class="text-warm">따뜻함</span> 한 스푼
+                        <span class="text-cold">차가운 현실</span>에 <span class="text-warm-white">따뜻함</span> 한 스푼
                     </h2>
                     <div class="philosophy-desc">
                         <p>냉정한 일상에서 지나쳤던 따스함을</p>
@@ -674,13 +696,12 @@
                     </div>
                 </div>
 
-                <!-- 2. Works 뷰 (세로 9:16 영상 + 미니 컨트롤러) -->
+                <!-- 2. Works 뷰 (9:16 영상 + 미니 컨트롤러) -->
                 <div class="hologram-content works-view" id="viewWorks">
                     <video id="hologramVideo" autoplay muted loop playsinline>
                         <source src="showreel.mp4" type="video/mp4">
                     </video>
 
-                    <!-- 미니 플로팅 컨트롤러 -->
                     <div class="video-controls-bar">
                         <button class="video-ctrl-btn" id="videoPlayPauseBtn" title="재생/일시정지">
                             <i class="fa-solid fa-pause"></i>
@@ -696,11 +717,11 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <!-- ⭐️ 우측 하단 은은한 독립 소개 카드 (Works 탭에서만 활성화) -->
+            <!-- 우측 하단 미니멀 설명 영역 -->
             <div class="side-info-card" id="sideInfoCard">
-                <div class="side-info-tag">Featured Story</div>
-                <div class="side-info-title">101호의 기억</div>
-                <div class="side-info-desc">차가운 밤, 작은 불빛 아래 피어난 따스한 이야기.</div>
+                <div class="side-accent-line"></div>
+                <div class="side-info-title">작품 제목</div>
+                <div class="side-info-desc">차가운 밤, 작은 불빛 아래 피어난 따스한 이야기…</div>
             </div>
         </div>
 
@@ -791,7 +812,7 @@
             if(video) video.pause();
         });
 
-        // 🔀 3. Philosophy (가로) ⇄ Works (세로 9:16) 탭 전환
+        // 🔀 3. Philosophy ⇄ Works 탭 전환
         const navPhilosophy = document.getElementById('navPhilosophy');
         const navWorks = document.getElementById('navWorks');
         const viewPhilosophy = document.getElementById('viewPhilosophy');
@@ -846,7 +867,7 @@
         prevBtn.addEventListener('click', toggleTab);
         nextBtn.addEventListener('click', toggleTab);
 
-        // 🎛️ 4. 영상 커스텀 컨트롤러 로직 (재생/일시정지, 음소거 토글)
+        // 🎛️ 4. 영상 컨트롤러 로직
         const playPauseBtn = document.getElementById('videoPlayPauseBtn');
         const muteBtn = document.getElementById('videoMuteBtn');
 
