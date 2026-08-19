@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500;600&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -23,8 +23,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
             --font-kugleim: 'KugleimLocal', cursive, sans-serif;
-            --font-serif: 'Cinzel', serif;
             --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-en-clean: 'Montserrat', sans-serif;
             --font-title: 'Gowun Batang', serif;
         }
 
@@ -103,7 +103,7 @@
             background: none;
             border: none;
             color: rgba(255, 255, 255, 0.55);
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-en-clean);
             font-size: 15px;
             letter-spacing: 2px;
             cursor: pointer;
@@ -204,7 +204,6 @@
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        /* 줄무늬 제거 및 깨끗한 홀로그램 패널 */
         .hologram-panel {
             position: relative;
             background: rgba(255, 255, 255, 0.06);
@@ -267,7 +266,7 @@
         }
 
         .philosophy-tag {
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-en-clean);
             font-size: 12px;
             letter-spacing: 4px;
             color: #fde68a;
@@ -375,70 +374,71 @@
             transform: scale(1.15);
         }
 
-        /* ⭐️ 우측 하단 작품 소개 카드 (소프트 딥 비네팅으로 가독성 극대화) */
+        /* 우측 영상 소개글 (거리 좁힘 + 그림자 제거 + 우측 슬라이드인 모션) */
         .side-info-card {
             position: absolute;
-            bottom: 40px;
-            right: 60px;
-            max-width: 340px;
-            padding: 16px 20px;
-            border-radius: 16px;
-            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.65) 0%, rgba(11, 17, 32, 0.25) 75%, transparent 100%);
+            left: calc(50% + 200px); /* 패널 바로 오른쪽에 가깝게 배치 */
+            bottom: 60px;
+            max-width: 360px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            box-shadow: none;
             z-index: 25;
             text-align: left;
             opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateX(-24px); /* 왼쪽에서 시작하여 오른쪽으로 이동 */
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
         }
 
         .side-info-card.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
             pointer-events: auto;
         }
 
         .side-accent-line {
-            width: 130px;
-            height: 10px;
-            border-top: 1.5px solid rgba(255, 255, 255, 0.8);
-            border-left: 1.5px solid rgba(255, 255, 255, 0.8);
+            width: 110px;
+            height: 8px;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.7);
+            border-left: 1.5px solid rgba(255, 255, 255, 0.7);
             transform: skewX(-35deg);
-            margin-bottom: 12px;
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+            margin-bottom: 14px;
         }
 
         .side-info-title {
             font-family: var(--font-sans);
-            font-size: 23px;
+            font-size: 22px;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 12px;
             letter-spacing: -0.5px;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.8);
+            text-shadow: none; /* 그림자 완전 제거 */
         }
 
         .side-info-desc {
             font-family: var(--font-sans);
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 400;
-            color: rgba(255, 255, 255, 0.92);
+            color: rgba(255, 255, 255, 0.88);
             line-height: 1.7;
             word-break: keep-all;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.9);
+            text-shadow: none; /* 그림자 완전 제거 */
         }
 
         .side-info-desc p {
-            margin-bottom: 9px;
+            margin-bottom: 10px;
         }
 
         .side-info-tag {
             margin-top: 12px;
             font-size: 12px;
             font-weight: 500;
-            color: #93c5fd;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+            color: #bae6fd;
             letter-spacing: 0.5px;
+            text-shadow: none;
         }
 
         .footer-spacer {
@@ -516,14 +516,15 @@
             line-height: 1.2;
         }
 
+        /* 깔끔한 고딕체로 변경된 첫 페이지 IGLOO FILM */
         .hero-sub-text {
-            font-family: var(--font-serif);
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 4px;
-            color: #fde68a;
+            font-family: var(--font-en-clean);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            color: #ffffff;
             text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
         .portal-btn-wrapper {
@@ -618,9 +619,23 @@
             margin-bottom: 10px;
         }
 
+        @media (max-width: 900px) {
+            .side-info-card { 
+                left: 50%;
+                transform: translateX(-50%) translateY(15px);
+                bottom: 15px; 
+                max-width: 85vw;
+                text-align: center;
+            }
+            .side-info-card.show {
+                transform: translateX(-50%) translateY(0);
+            }
+            .side-accent-line { margin: 0 auto 10px auto; }
+        }
+
         @media (max-width: 768px) {
             .hero-main-text { font-size: 34px; }
-            .hero-sub-text { font-size: 12px; letter-spacing: 2px; }
+            .hero-sub-text { font-size: 13px; letter-spacing: 3px; }
             .header { padding: 20px; }
             .hologram-stage-wrapper { padding: 0 10px; gap: 10px; }
             .hologram-panel.mode-philosophy { width: 85vw; height: auto; }
@@ -628,9 +643,6 @@
             .hologram-nav-btn { width: 38px; height: 38px; font-size: 14px; }
             .philosophy-title { font-size: 19px; }
             .philosophy-desc { font-size: 13px; }
-            .side-info-card { right: 20px; bottom: 15px; max-width: 260px; padding: 10px; }
-            .side-info-title { font-size: 18px; }
-            .side-info-desc { font-size: 11.5px; }
         }
     </style>
 </head>
@@ -686,7 +698,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Works 뷰 (선명한 무패턴 영상) -->
+                <!-- 2. Works 뷰 -->
                 <div class="hologram-content works-view" id="viewWorks">
                     <video id="hologramVideo" autoplay muted loop playsinline>
                         <source src="showreel.mp4" type="video/mp4">
@@ -707,13 +719,13 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <!-- 우측 하단: 가독성 보강된 작품 소개 -->
+            <!-- 우측 영상 소개글 (수정된 텍스트 + 애니메이션 연동) -->
             <div class="side-info-card" id="sideInfoCard">
                 <div class="side-accent-line"></div>
-                <div class="side-info-title">왕과 사는 남이섬</div>
+                <div class="side-info-title">왕과 사는 남이섬(2026)</div>
                 <div class="side-info-desc">
-                    <p>영화 〈왕과 사는 남자〉를 패러디하여,<br>‘만약 단종이 남이섬으로 유배를 왔다면?’이라는 상상에서 이야기를 써내려갔다.</p>
-                    <p>유배가 아닌 유흥(?)을 즐기는 평범한 10대 소년, 이홍위. 그리고 한 번 빠지면 좀처럼 벗어나기 힘든 남이섬의 매력을 유쾌하게 담아내고자 했다.</p>
+                    <p>영화 〈왕과 사는 남자〉를 패러디하여,<br>‘만약 단종이 남이섬으로 유배를 왔다면?’이라는<br>상상에서 이야기를 써내려갔다.</p>
+                    <p>유배가 아닌 유흥(?)을 즐기는 평범한 10대 소년, 이홍위.<br>그리고 한 번 빠지면 좀처럼 벗어나기 힘든 남이섬의 매력을<br>유쾌하게 담아내고자 했다.</p>
                     <p>차가운 현실을 살아야만 했던 인물에게,<br>잠시 따뜻한 시간을 선물해 본 첫 번째 이야기.</p>
                     <div class="side-info-tag">#남이섬AI영상공모전 출품작</div>
                 </div>
@@ -732,7 +744,7 @@
 
         <div class="hero-title-box">
             <h1 class="hero-main-text">Come in, Melt a little.</h1>
-            <p class="hero-sub-text">Igloo Film</p>
+            <p class="hero-sub-text">IGLOO FILM</p>
         </div>
 
         <div class="portal-btn-wrapper">
@@ -748,10 +760,10 @@
     </div>
 
     <script>
-        // 🎬 첫 화면 배경 영상 속도 50% 감속 설정 (0.5배속)
+        // 🎬 첫 화면 배경 영상 속도 0.25배속 설정
         const heroBgVideo = document.getElementById('heroBgVideo');
         if (heroBgVideo) {
-            heroBgVideo.playbackRate = 0.5;
+            heroBgVideo.playbackRate = 0.25;
         }
 
         // 🎬 화면 전환 로직
@@ -773,7 +785,7 @@
             heroScreen.classList.remove('suck-in');
             if(heroBgVideo) {
                 heroBgVideo.play();
-                heroBgVideo.playbackRate = 0.5;
+                heroBgVideo.playbackRate = 0.25;
             }
             if(video) video.pause();
         });
