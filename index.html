@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- Igloo Film용 구글 영문 폰트 -->
+    <!-- 구글 영문 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -26,6 +26,7 @@
             --font-kugleim: 'KugleimLocal', cursive, sans-serif;
             --font-serif: 'Cinzel', serif;
             --font-sans: 'Montserrat', sans-serif;
+            --font-kor: 'Gowun Batang', serif;
         }
 
         body {
@@ -37,7 +38,7 @@
             height: 100vh;
         }
 
-        /* ❄️ 눈 내리는 캔버스 (전환 즉시 부드럽게 소멸) */
+        /* ❄️ 눈 내리는 캔버스 */
         #snow-canvas {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -52,7 +53,7 @@
         }
 
         /* ==============================================
-           1. 이글루 내부 화면 (Inside.png) - 뒤편에 상시 배치
+           1. 이글루 내부 화면 (Inside.png)
            ============================================== */
         .main-app {
             position: fixed;
@@ -72,88 +73,244 @@
             transform: scale(1);
         }
 
+        /* ⭐️ 완전 투명하고 탁 트인 상단 헤더 */
         .header {
-            width: 100%; padding: 24px 60px;
-            display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(10px);
-            background: rgba(15, 23, 42, 0.4); border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            border-bottom: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            z-index: 20;
         }
 
         .logo {
             display: flex; align-items: center; gap: 10px; text-decoration: none;
-            color: #ffffff; font-size: 20px; font-family: var(--font-serif);
+            color: rgba(255, 255, 255, 0.9); font-size: 20px; font-family: var(--font-serif);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; display: inline-block; }
+        .logo-dot { width: 7px; height: 7px; border-radius: 50%; background: #fbbf24; display: inline-block; box-shadow: 0 0 10px #fbbf24; }
 
-        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; font-size: 14px; }
-        .nav-links a { text-decoration: none; color: #cbd5e1; }
-        .nav-links a:hover { color: #fbbf24; }
+        /* ⭐️ 반투명 화이트 텍스트 메뉴 */
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            padding: 6px 0;
+            position: relative;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-link-btn:hover {
+            color: #ffffff;
+        }
+
+        /* 활성화된 메뉴 스타일 (따스한 앰버빛) */
+        .nav-link-btn.active {
+            color: #fde68a;
+            font-weight: 500;
+        }
+
+        .nav-link-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: #fbbf24;
+            border-radius: 2px;
+            box-shadow: 0 0 8px #fbbf24;
+        }
 
         .btn-outside {
-            background: rgba(255, 255, 255, 0.12); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 20px; border-radius: 20px; font-size: 13px; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             transition: all 0.3s ease;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
+
         .btn-outside:hover {
             background: rgba(251, 191, 36, 0.25);
             border-color: rgba(251, 191, 36, 0.8);
+            color: #fef3c7;
         }
 
-        .hologram-stage {
+        /* 🌐 홀로그램 및 좌우 네비게이션 스테이지 */
+        .hologram-stage-wrapper {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px;
-            padding: 20px;
+            gap: 30px;
+            padding: 0 40px;
+            perspective: 1200px;
+        }
+
+        /* ⭐️ 좌우 홀로그램 전환 화살표 버튼 */
+        .hologram-nav-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            z-index: 30;
+        }
+
+        .hologram-nav-btn:hover {
+            transform: scale(1.15);
+            background: rgba(251, 191, 36, 0.25);
+            border-color: rgba(251, 191, 36, 0.85);
+            color: #fde68a;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
         }
 
         .hologram-panel {
             position: relative;
-            width: 600px;
-            max-width: 80vw;
+            width: 660px;
+            max-width: 72vw;
             aspect-ratio: 16/9;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 16px;
             overflow: hidden;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(251, 191, 36, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: hologramFloat 4s ease-in-out infinite;
-            transform: rotateX(8deg);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(251, 191, 36, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.25);
+            animation: hologramFloat 4.5s ease-in-out infinite;
+            transform: rotateX(6deg);
         }
 
+        /* 홀로그램 미세 가로 스캔라인 */
         .hologram-panel::after {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
             background-size: 100% 4px;
-            z-index: 2;
+            z-index: 5;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         @keyframes hologramFloat {
-            0%, 100% { transform: translateY(0) rotateX(8deg); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(251, 191, 36, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.3); }
-            50% { transform: translateY(-12px) rotateX(6deg); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(251, 191, 36, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.5); }
+            0%, 100% { transform: translateY(0) rotateX(6deg); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(251, 191, 36, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.25); }
+            50% { transform: translateY(-10px) rotateX(4deg); box-shadow: 0 35px 70px rgba(0, 0, 0, 0.8), 0 0 70px rgba(251, 191, 36, 0.45), inset 0 0 30px rgba(255, 255, 255, 0.4); }
         }
 
-        .hologram-panel video {
+        /* ⭐️ 홀로그램 내부 컨텐츠 레이어 (Philosophy / Works) */
+        .hologram-content {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0.96);
+            z-index: 3;
+        }
+
+        .hologram-content.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        /* 1. Philosophy (이글루필름 소개) */
+        .philosophy-view {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .philosophy-tag {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: #fde68a;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .philosophy-title {
+            font-family: var(--font-kor);
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #ffffff;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+            margin-bottom: 14px;
+        }
+
+        .philosophy-desc {
+            font-family: var(--font-kor);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            max-width: 480px;
+            word-break: keep-all;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 2. Works (영상 재생 화면) */
+        .works-view {
+            padding: 0;
+        }
+
+        .works-view video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.9;
         }
 
         .footer-spacer {
-            height: 40px;
+            height: 30px;
         }
 
         /* ==============================================
-           2. 랜딩 화면 (바깥 세상) - 전면에 배치되어 전환 시 확대 및 페이드아웃
+           2. 랜딩 화면 (바깥 세상)
            ============================================== */
         .hero-screen {
             position: fixed;
@@ -167,7 +324,7 @@
             align-items: center;
             padding: 40px 20px;
             z-index: 100;
-            transform-origin: 50% 61%; /* 입구 중심 확대 */
+            transform-origin: 50% 61%;
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.9s cubic-bezier(0.7, 0, 0.2, 1);
             opacity: 1;
             pointer-events: auto;
@@ -180,7 +337,6 @@
             z-index: -1;
         }
 
-        /* 🎬 줌인 전환 클래스 */
         .hero-screen.suck-in {
             transform: scale(7.5);
             opacity: 0;
@@ -201,7 +357,6 @@
             opacity: 0;
         }
 
-        /* ⭐️ 윗줄: Come in, Melt a little. */
         .hero-main-text {
             font-family: var(--font-kugleim) !important;
             font-size: 52px;
@@ -214,7 +369,6 @@
             line-height: 1.2;
         }
 
-        /* 아랫줄: Igloo Film */
         .hero-sub-text {
             font-family: var(--font-serif);
             font-size: 15px;
@@ -225,7 +379,6 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
         }
 
-        /* 🧊 이글루 입구 원형 얼음 버튼 래퍼 */
         .portal-btn-wrapper {
             position: absolute;
             top: 61%;
@@ -321,8 +474,12 @@
         @media (max-width: 768px) {
             .hero-main-text { font-size: 34px; }
             .hero-sub-text { font-size: 12px; letter-spacing: 2px; }
-            .header { padding: 16px 20px; }
-            .hologram-panel { width: 90vw; }
+            .header { padding: 20px; }
+            .hologram-stage-wrapper { padding: 0 10px; gap: 10px; }
+            .hologram-panel { width: 85vw; }
+            .hologram-nav-btn { width: 38px; height: 38px; font-size: 14px; }
+            .philosophy-title { font-size: 18px; }
+            .philosophy-desc { font-size: 12px; }
         }
     </style>
 </head>
@@ -331,28 +488,59 @@
     <!-- ❄️ 눈 내리는 캔버스 -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- 1. 이글루 내부 화면 (배경에 상시 대기) -->
+    <!-- 1. 이글루 내부 화면 (Inside.png) -->
     <div class="main-app" id="mainApp">
+        <!-- 완전 투명 헤더 -->
         <header class="header">
             <a href="#" class="logo">
                 <span class="logo-dot"></span>
-                <span>Igloo Film</span>
+                <span>IGLOO FILM</span>
             </a>
+
+            <!-- 반투명 화이트 텍스트 네비게이션 -->
             <ul class="nav-links">
-                <li><a href="#">Philosophy</a></li>
-                <li><a href="#">Works</a></li>
+                <li><button class="nav-link-btn active" id="navPhilosophy">Philosophy</button></li>
+                <li><button class="nav-link-btn" id="navWorks">Works</button></li>
             </ul>
+
             <button class="btn-outside" id="exitOutsideBtn">
                 <i class="fa-solid fa-snowflake"></i> Outside
             </button>
         </header>
 
-        <div class="hologram-stage">
+        <!-- 홀로그램 + 좌우 화살표 버튼 영역 -->
+        <div class="hologram-stage-wrapper">
+            <!-- 왼쪽 이전 버튼 -->
+            <button class="hologram-nav-btn" id="prevSlideBtn" title="이전">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <!-- 중앙 공중 부양 홀로그램 패널 -->
             <div class="hologram-panel">
-                <video autoplay muted loop playsinline>
-                    <source src="" type="video/mp4">
-                </video>
+                <!-- 1. Philosophy 뷰 -->
+                <div class="hologram-content philosophy-view active" id="viewPhilosophy">
+                    <p class="philosophy-tag">Brand Philosophy</p>
+                    <h2 class="philosophy-title">차가운 현실 위에 피어난<br>따스한 상상력</h2>
+                    <p class="philosophy-desc">
+                        이글루 필름은 얼어붙은 세상 속에서도 결코 녹아내리지 않을<br>
+                        우리 모두의 아늑한 기억과 판타지를 영상으로 빚어냅니다.<br>
+                        잠시 들어와 마음을 녹이고 가세요.
+                    </p>
+                </div>
+
+                <!-- 2. Works 뷰 (영상) -->
+                <div class="hologram-content works-view" id="viewWorks">
+                    <!-- 업로드하실 영상 파일명을 src에 넣어주세요 (예: showreel.mp4) -->
+                    <video id="hologramVideo" autoplay muted loop playsinline>
+                        <source src="showreel.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
+
+            <!-- 오른쪽 다음 버튼 -->
+            <button class="hologram-nav-btn" id="nextSlideBtn" title="다음">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
         </div>
 
         <div class="footer-spacer"></div>
@@ -380,6 +568,7 @@
     </div>
 
     <script>
+        // ❄️ 1. 눈 내리기 효과
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -420,25 +609,65 @@
         }
         drawSnow();
 
-        // 🎬 매끄러운 줌인/줌아웃 전환 로직
+        // 🎬 2. 화면 전환 로직 (바깥 ⇄ 내부)
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
         const mainApp = document.getElementById('mainApp');
         const exitBtn = document.getElementById('exitOutsideBtn');
+        const video = document.getElementById('hologramVideo');
 
-        // 입장: 바깥 화면이 줌인되며 바로 뒷배경인 실내가 드러남
         enterBtn.addEventListener('click', () => {
-            canvas.classList.add('hidden'); // 눈 즉시 페이드아웃
-            heroScreen.classList.add('suck-in'); // 바깥 화면 확대 페이드아웃
-            mainApp.classList.add('active'); // 실내 살짝 줌인되며 정착
+            canvas.classList.add('hidden');
+            heroScreen.classList.add('suck-in');
+            mainApp.classList.add('active');
+            if(video) video.play();
         });
 
-        // 퇴장: 다시 바깥으로 부드럽게 줌아웃 복귀
         exitBtn.addEventListener('click', () => {
             mainApp.classList.remove('active');
             heroScreen.classList.remove('suck-in');
-            canvas.classList.remove('hidden'); // 눈 다시 내림
+            canvas.classList.remove('hidden');
+            if(video) video.pause();
         });
+
+        // 🔀 3. Philosophy ⇄ Works 탭 & 화살표 전환 인터랙션
+        const navPhilosophy = document.getElementById('navPhilosophy');
+        const navWorks = document.getElementById('navWorks');
+        const viewPhilosophy = document.getElementById('viewPhilosophy');
+        const viewWorks = document.getElementById('viewWorks');
+        const prevBtn = document.getElementById('prevSlideBtn');
+        const nextBtn = document.getElementById('nextSlideBtn');
+
+        let currentTab = 'philosophy'; // 'philosophy' 또는 'works'
+
+        function switchTab(tab) {
+            currentTab = tab;
+            if (tab === 'philosophy') {
+                navPhilosophy.classList.add('active');
+                navWorks.classList.remove('active');
+                viewPhilosophy.classList.add('active');
+                viewWorks.classList.remove('active');
+            } else {
+                navPhilosophy.classList.remove('active');
+                navWorks.classList.add('active');
+                viewPhilosophy.classList.remove('active');
+                viewWorks.classList.add('active');
+                if(video) video.play();
+            }
+        }
+
+        function toggleTab() {
+            if (currentTab === 'philosophy') {
+                switchTab('works');
+            } else {
+                switchTab('philosophy');
+            }
+        }
+
+        navPhilosophy.addEventListener('click', () => switchTab('philosophy'));
+        navWorks.addEventListener('click', () => switchTab('works'));
+        prevBtn.addEventListener('click', toggleTab);
+        nextBtn.addEventListener('click', toggleTab);
     </script>
 </body>
 </html>
