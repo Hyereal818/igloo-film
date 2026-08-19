@@ -182,6 +182,7 @@
             gap: 30px;
             padding: 0 40px;
             perspective: 1200px;
+            position: relative;
         }
 
         .hologram-nav-btn {
@@ -211,7 +212,7 @@
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        /* 자동 크기 반응형 홀로그램 패널 */
+        /* ⭐️ 9:16 세로형 & 16:9 가로형 자동 전환 홀로그램 패널 */
         .hologram-panel {
             position: relative;
             background: rgba(255, 255, 255, 0.06);
@@ -224,23 +225,23 @@
             animation: hologramFloat 4.5s ease-in-out infinite;
             transform: rotateX(6deg);
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-                        height 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-                        aspect-ratio 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                        height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* 1. Philosophy 가로 모드 */
         .hologram-panel.mode-philosophy {
             width: 660px;
             max-width: 72vw;
-            aspect-ratio: 16/9;
-            height: auto;
+            height: 371px;
+            max-height: 52vh;
         }
 
+        /* 2. Works 세로 9:16 정확한 비율 모드 */
         .hologram-panel.mode-works {
-            width: 320px;
-            max-width: 80vw;
-            height: 568px;
+            height: 580px;
             max-height: 68vh;
-            aspect-ratio: 9/16;
+            width: calc(min(580px, 68vh) * 9 / 16); /* 정확한 9:16 계산 */
+            max-width: 80vw;
         }
 
         .hologram-panel::after {
@@ -306,10 +307,17 @@
             word-break: keep-all;
         }
 
-        /* ⭐️ 아주 연하고 선명한 아이스 블루 (배경 대비 극대화) */
-        .highlight-cold {
+        /* ⭐️ 차가운 현실: 글로우 제거 + 깨끗하고 선명한 아이스 블루 */
+        .text-cold {
             color: #bae6fd;
-            text-shadow: 0 0 16px rgba(186, 230, 253, 0.8), 0 0 30px rgba(56, 189, 248, 0.5);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            font-weight: 700;
+        }
+
+        /* ⭐️ 따뜻함: 포근한 앰버 골드 글로우 추가 */
+        .text-warm {
+            color: #fef08a;
+            text-shadow: 0 0 14px rgba(254, 240, 138, 0.8), 0 0 24px rgba(234, 179, 8, 0.6);
             font-weight: 700;
         }
 
@@ -334,7 +342,7 @@
             font-weight: 400;
         }
 
-        /* ⭐️ 2. Works 뷰 (영상 + 캡션 오버레이 + 컨트롤러) */
+        /* ⭐️ 2. Works 뷰 (영상 + 미니 컨트롤러) */
         .works-view {
             padding: 0;
             width: 100%;
@@ -349,46 +357,7 @@
             display: block;
         }
 
-        /* 영상 하단 감성 소개 캡션 오버레이 */
-        .video-caption-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 40px 18px 56px 18px;
-            background: linear-gradient(to top, rgba(11, 17, 32, 0.9) 0%, rgba(11, 17, 32, 0.4) 60%, transparent 100%);
-            z-index: 6;
-            text-align: left;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-caption-tag {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: #93c5fd;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .video-caption-title {
-            font-family: var(--font-kugleim);
-            font-size: 18px;
-            color: #ffffff;
-            margin-bottom: 4px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-        }
-
-        .video-caption-desc {
-            font-family: var(--font-sans);
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.4;
-            word-break: keep-all;
-        }
-
-        /* ⭐️ 미니멀 플로팅 영상 컨트롤러 */
+        /* 영상 하단 컨트롤러 */
         .video-controls-bar {
             position: absolute;
             bottom: 12px;
@@ -397,7 +366,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(15, 23, 42, 0.65);
+            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.25);
@@ -405,7 +374,7 @@
             border-radius: 20px;
             z-index: 10;
             opacity: 0.85;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .works-view:hover .video-controls-bar {
@@ -428,6 +397,59 @@
         .video-ctrl-btn:hover {
             color: #bae6fd;
             transform: scale(1.15);
+        }
+
+        /* ⭐️ 우측 하단 독립된 은은한 작품 소개 카드 */
+        .side-info-card {
+            position: absolute;
+            bottom: 30px;
+            right: 60px;
+            max-width: 260px;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 25;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        /* Works 화면일 때만 우측 하단에 부드럽게 등장 */
+        .side-info-card.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .side-info-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #93c5fd;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .side-info-title {
+            font-family: var(--font-kugleim);
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .side-info-desc {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            word-break: keep-all;
         }
 
         .footer-spacer {
@@ -601,11 +623,12 @@
             .hero-sub-text { font-size: 12px; letter-spacing: 2px; }
             .header { padding: 20px; }
             .hologram-stage-wrapper { padding: 0 10px; gap: 10px; }
-            .hologram-panel.mode-philosophy { width: 85vw; }
-            .hologram-panel.mode-works { width: 280px; height: 497px; }
+            .hologram-panel.mode-philosophy { width: 85vw; height: auto; }
+            .hologram-panel.mode-works { height: 50vh; width: calc(50vh * 9 / 16); }
             .hologram-nav-btn { width: 38px; height: 38px; font-size: 14px; }
             .philosophy-title { font-size: 19px; }
             .philosophy-desc { font-size: 13px; }
+            .side-info-card { right: 20px; bottom: 20px; max-width: 200px; padding: 12px; }
         }
     </style>
 </head>
@@ -635,12 +658,13 @@
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
+            <!-- ⭐️ 정확한 9:16 비율 & 16:9 반응형 패널 -->
             <div class="hologram-panel mode-philosophy" id="hologramPanel">
-                <!-- 1. Philosophy 뷰 (이모지 제거 및 밝은 하늘색 강조) -->
+                <!-- 1. Philosophy 뷰 (차가운 현실: 텍스트만 / 따뜻함: 앰버 글로우) -->
                 <div class="hologram-content philosophy-view active" id="viewPhilosophy">
                     <p class="philosophy-tag">Brand Philosophy</p>
                     <h2 class="philosophy-title">
-                        <span class="highlight-cold">차가운 현실</span>에 따뜻함 한 스푼
+                        <span class="text-cold">차가운 현실</span>에 <span class="text-warm">따뜻함</span> 한 스푼
                     </h2>
                     <div class="philosophy-desc">
                         <p>냉정한 일상에서 지나쳤던 따스함을</p>
@@ -650,20 +674,13 @@
                     </div>
                 </div>
 
-                <!-- 2. Works 뷰 (영상 + 소개 캡션 + 미니 컨트롤 바) -->
+                <!-- 2. Works 뷰 (세로 9:16 영상 + 미니 컨트롤러) -->
                 <div class="hologram-content works-view" id="viewWorks">
                     <video id="hologramVideo" autoplay muted loop playsinline>
                         <source src="showreel.mp4" type="video/mp4">
                     </video>
 
-                    <!-- 감성 영상 소개 캡션 오버레이 (문구는 원하는 대로 수정 가능) -->
-                    <div class="video-caption-overlay">
-                        <div class="video-caption-tag">Featured Story</div>
-                        <div class="video-caption-title">101호의 기억</div>
-                        <div class="video-caption-desc">차가운 밤, 작은 불빛 아래 피어난 따스한 이야기.</div>
-                    </div>
-
-                    <!-- 일시정지 & 볼륨 토글 컨트롤러 -->
+                    <!-- 미니 플로팅 컨트롤러 -->
                     <div class="video-controls-bar">
                         <button class="video-ctrl-btn" id="videoPlayPauseBtn" title="재생/일시정지">
                             <i class="fa-solid fa-pause"></i>
@@ -678,6 +695,13 @@
             <button class="hologram-nav-btn" id="nextSlideBtn" title="다음">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
+
+            <!-- ⭐️ 우측 하단 은은한 독립 소개 카드 (Works 탭에서만 활성화) -->
+            <div class="side-info-card" id="sideInfoCard">
+                <div class="side-info-tag">Featured Story</div>
+                <div class="side-info-title">101호의 기억</div>
+                <div class="side-info-desc">차가운 밤, 작은 불빛 아래 피어난 따스한 이야기.</div>
+            </div>
         </div>
 
         <div class="footer-spacer"></div>
@@ -773,6 +797,7 @@
         const viewPhilosophy = document.getElementById('viewPhilosophy');
         const viewWorks = document.getElementById('viewWorks');
         const hologramPanel = document.getElementById('hologramPanel');
+        const sideInfoCard = document.getElementById('sideInfoCard');
         const prevBtn = document.getElementById('prevSlideBtn');
         const nextBtn = document.getElementById('nextSlideBtn');
 
@@ -789,6 +814,7 @@
 
                 viewPhilosophy.classList.add('active');
                 viewWorks.classList.remove('active');
+                sideInfoCard.classList.remove('show');
                 if(video) video.pause();
             } else {
                 navPhilosophy.classList.remove('active');
@@ -799,6 +825,7 @@
 
                 viewPhilosophy.classList.remove('active');
                 viewWorks.classList.add('active');
+                sideInfoCard.classList.add('show');
                 if(video) {
                     video.play();
                     updatePlayPauseIcon();
