@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- 구글 영문 폰트 및 프리텐다드(깔끔한 고딕) -->
+    <!-- 구글 영문 폰트 및 프리텐다드(고딕) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -211,7 +211,7 @@
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
 
-        /* ⭐️ 자동 크기 전환 지원 홀로그램 패널 */
+        /* 자동 크기 반응형 홀로그램 패널 */
         .hologram-panel {
             position: relative;
             background: rgba(255, 255, 255, 0.06);
@@ -223,14 +223,11 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(251, 191, 36, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.25);
             animation: hologramFloat 4.5s ease-in-out infinite;
             transform: rotateX(6deg);
-            
-            /* 가로 ↔ 세로 크기 전환 애니메이션 */
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
                         height 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
                         aspect-ratio 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 1. Philosophy 모드일 때 (가로형) */
         .hologram-panel.mode-philosophy {
             width: 660px;
             max-width: 72vw;
@@ -238,7 +235,6 @@
             height: auto;
         }
 
-        /* 2. Works 모드일 때 (세로형 9:16 영상 맞춤) */
         .hologram-panel.mode-works {
             width: 320px;
             max-width: 80vw;
@@ -255,7 +251,7 @@
             background-size: 100% 4px;
             z-index: 5;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.45;
         }
 
         @keyframes hologramFloat {
@@ -283,7 +279,7 @@
             transform: scale(1);
         }
 
-        /* ⭐️ 1. Philosophy 뷰 (수정된 텍스트 및 고딕 폰트) */
+        /* ⭐️ 1. Philosophy 뷰 */
         .philosophy-view {
             text-align: center;
             padding: 30px 40px;
@@ -301,7 +297,7 @@
 
         .philosophy-title {
             font-family: var(--font-title);
-            font-size: 25px;
+            font-size: 26px;
             font-weight: 700;
             line-height: 1.4;
             color: #ffffff;
@@ -310,13 +306,13 @@
             word-break: keep-all;
         }
 
-        /* ⭐️ '차가운 현실' 연한 하늘색 포인트 */
+        /* ⭐️ 아주 연하고 선명한 아이스 블루 (배경 대비 극대화) */
         .highlight-cold {
-            color: #93c5fd;
-            text-shadow: 0 0 15px rgba(147, 197, 253, 0.6);
+            color: #bae6fd;
+            text-shadow: 0 0 16px rgba(186, 230, 253, 0.8), 0 0 30px rgba(56, 189, 248, 0.5);
+            font-weight: 700;
         }
 
-        /* ⭐️ 깔끔한 고딕체 본문 */
         .philosophy-desc {
             font-family: var(--font-sans);
             font-size: 15px;
@@ -338,11 +334,12 @@
             font-weight: 400;
         }
 
-        /* ⭐️ 2. Works 뷰 (세로형 영상 9:16 완벽 핏) */
+        /* ⭐️ 2. Works 뷰 (영상 + 캡션 오버레이 + 컨트롤러) */
         .works-view {
             padding: 0;
             width: 100%;
             height: 100%;
+            position: relative;
         }
 
         .works-view video {
@@ -350,6 +347,87 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        /* 영상 하단 감성 소개 캡션 오버레이 */
+        .video-caption-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 18px 56px 18px;
+            background: linear-gradient(to top, rgba(11, 17, 32, 0.9) 0%, rgba(11, 17, 32, 0.4) 60%, transparent 100%);
+            z-index: 6;
+            text-align: left;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-caption-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #93c5fd;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .video-caption-title {
+            font-family: var(--font-kugleim);
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .video-caption-desc {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        /* ⭐️ 미니멀 플로팅 영상 컨트롤러 */
+        .video-controls-bar {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 6px 14px;
+            border-radius: 20px;
+            z-index: 10;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .works-view:hover .video-controls-bar {
+            opacity: 1;
+        }
+
+        .video-ctrl-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .video-ctrl-btn:hover {
+            color: #bae6fd;
+            transform: scale(1.15);
         }
 
         .footer-spacer {
@@ -538,11 +616,9 @@
 
     <!-- 1. 이글루 내부 화면 (Inside.png) -->
     <div class="main-app" id="mainApp">
-        <!-- 투명 헤더 -->
         <header class="header">
             <a href="#" class="logo">IGLOO FILM</a>
 
-            <!-- 화이트 네온 메뉴 -->
             <ul class="nav-links">
                 <li><button class="nav-link-btn active" id="navPhilosophy">Philosophy</button></li>
                 <li><button class="nav-link-btn" id="navWorks">Works</button></li>
@@ -553,19 +629,18 @@
             </button>
         </header>
 
-        <!-- 홀로그램 + 좌우 화살표 버튼 영역 -->
+        <!-- 홀로그램 + 좌우 네비게이션 -->
         <div class="hologram-stage-wrapper">
             <button class="hologram-nav-btn" id="prevSlideBtn" title="이전">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <!-- ⭐️ 자동 크기 반응형 홀로그램 패널 (기본 mode-philosophy) -->
             <div class="hologram-panel mode-philosophy" id="hologramPanel">
-                <!-- 1. Philosophy 뷰 (수정된 문구 및 스타일) -->
+                <!-- 1. Philosophy 뷰 (이모지 제거 및 밝은 하늘색 강조) -->
                 <div class="hologram-content philosophy-view active" id="viewPhilosophy">
                     <p class="philosophy-tag">Brand Philosophy</p>
                     <h2 class="philosophy-title">
-                        🧊<span class="highlight-cold">차가운 현실</span>에 따뜻함 한 스푼
+                        <span class="highlight-cold">차가운 현실</span>에 따뜻함 한 스푼
                     </h2>
                     <div class="philosophy-desc">
                         <p>냉정한 일상에서 지나쳤던 따스함을</p>
@@ -575,11 +650,28 @@
                     </div>
                 </div>
 
-                <!-- 2. Works 뷰 (세로형 영상 9:16 자동 맞춤) -->
+                <!-- 2. Works 뷰 (영상 + 소개 캡션 + 미니 컨트롤 바) -->
                 <div class="hologram-content works-view" id="viewWorks">
                     <video id="hologramVideo" autoplay muted loop playsinline>
                         <source src="showreel.mp4" type="video/mp4">
                     </video>
+
+                    <!-- 감성 영상 소개 캡션 오버레이 (문구는 원하는 대로 수정 가능) -->
+                    <div class="video-caption-overlay">
+                        <div class="video-caption-tag">Featured Story</div>
+                        <div class="video-caption-title">101호의 기억</div>
+                        <div class="video-caption-desc">차가운 밤, 작은 불빛 아래 피어난 따스한 이야기.</div>
+                    </div>
+
+                    <!-- 일시정지 & 볼륨 토글 컨트롤러 -->
+                    <div class="video-controls-bar">
+                        <button class="video-ctrl-btn" id="videoPlayPauseBtn" title="재생/일시정지">
+                            <i class="fa-solid fa-pause"></i>
+                        </button>
+                        <button class="video-ctrl-btn" id="videoMuteBtn" title="소리 켜기/끄기">
+                            <i class="fa-solid fa-volume-xmark"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -675,7 +767,7 @@
             if(video) video.pause();
         });
 
-        // 🔀 3. Philosophy (가로) ⇄ Works (세로 9:16) 자동 크기 전환 탭 로직
+        // 🔀 3. Philosophy (가로) ⇄ Works (세로 9:16) 탭 전환
         const navPhilosophy = document.getElementById('navPhilosophy');
         const navWorks = document.getElementById('navWorks');
         const viewPhilosophy = document.getElementById('viewPhilosophy');
@@ -692,7 +784,6 @@
                 navPhilosophy.classList.add('active');
                 navWorks.classList.remove('active');
                 
-                // 홀로그램 패널 크기를 가로형으로 전환
                 hologramPanel.classList.remove('mode-works');
                 hologramPanel.classList.add('mode-philosophy');
 
@@ -703,13 +794,15 @@
                 navPhilosophy.classList.remove('active');
                 navWorks.classList.add('active');
 
-                // 홀로그램 패널 크기를 9:16 세로형으로 전환
                 hologramPanel.classList.remove('mode-philosophy');
                 hologramPanel.classList.add('mode-works');
 
                 viewPhilosophy.classList.remove('active');
                 viewWorks.classList.add('active');
-                if(video) video.play();
+                if(video) {
+                    video.play();
+                    updatePlayPauseIcon();
+                }
             }
         }
 
@@ -725,6 +818,38 @@
         navWorks.addEventListener('click', () => switchTab('works'));
         prevBtn.addEventListener('click', toggleTab);
         nextBtn.addEventListener('click', toggleTab);
+
+        // 🎛️ 4. 영상 커스텀 컨트롤러 로직 (재생/일시정지, 음소거 토글)
+        const playPauseBtn = document.getElementById('videoPlayPauseBtn');
+        const muteBtn = document.getElementById('videoMuteBtn');
+
+        function updatePlayPauseIcon() {
+            if(video.paused) {
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            } else {
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            }
+        }
+
+        playPauseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+            updatePlayPauseIcon();
+        });
+
+        muteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            video.muted = !video.muted;
+            if(video.muted) {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            }
+        });
     </script>
 </body>
 </html>
