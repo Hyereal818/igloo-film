@@ -4,21 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이글루 필름 | Igloo Film</title>
-    <!-- Google Fonts: 감성적인 영문 세리프와 산세리프 조합 -->
+    <!-- 폰트 변경: 얇고 감성적인 영문 폰트 (Playfair Display / Montserrat) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --bg-warm: #fcf9f2;
-            --color-deep-night: #1e293b;
-            --color-warm-amber: #fef3c7;
-            --color-warm-gold: #d97706;
-            --font-serif: 'Cinzel', 'Gowun Batang', serif;
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
         }
 
         body {
@@ -29,14 +25,14 @@
             min-height: 100vh;
         }
 
-        /* ❄️ 눈 내리는 효과를 위한 캔버스 */
+        /* ❄️ 눈 내리는 효과 (크기 키우고 잘 보이도록 수정) */
         #snow-canvas {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 10; opacity: 0.8;
+            pointer-events: none; z-index: 10; opacity: 0.95;
         }
 
-        /* === 1. 랜딩 화면 (고정 배경 이미지 + 타이틀 + 얼음 재생 버튼) === */
+        /* === 1. 랜딩 화면 === */
         .hero-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -47,104 +43,102 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
             z-index: 100;
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.8s ease;
         }
 
-        /* 은은한 어두운 비네팅 오버레이 (텍스트 가독성 향상) */
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.15) 0%, rgba(11, 17, 32, 0.5) 100%);
+            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.1) 0%, rgba(11, 17, 32, 0.55) 100%);
             z-index: -1;
         }
 
-        /* 화면 전환(안으로 빨려 들어감) 효과 클래스 */
         .hero-screen.suck-in {
             transform: scale(4.5);
             opacity: 0;
             pointer-events: none;
         }
 
-        /* 상단 2줄 텍스트 영역 */
+        /* 폰트 및 위치 수정된 상단 2줄 텍스트 (조금 더 아래로 내림) */
         .hero-title-box {
             text-align: center;
             z-index: 2;
-            margin-top: 20px;
-            animation: fadeInDown 1.2s ease;
+            margin-top: 14vh; /* 이글루와 가깝게 아래로 이동 */
         }
 
         .hero-main-text {
             font-family: var(--font-serif);
-            font-size: 38px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: #ffffff;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.2);
-            margin-bottom: 8px;
+            font-size: 34px;
+            font-weight: 400;
+            font-style: italic; /* 감성적인 이탤릭체 */
+            letter-spacing: 1px;
+            color: #f8fafc;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            margin-bottom: 6px;
         }
 
         .hero-sub-text {
-            font-family: var(--font-serif);
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 4px;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 300; /* 얇은 폰트 */
+            letter-spacing: 5px;
             color: #fde68a;
             text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
         }
 
-        /* 중앙 이글루 입구에 배치될 투명 얼음 재생 버튼 */
+        /* 🧊 이글루 입구에 맞게 아래로 내린 재생 버튼 */
         .ice-portal-btn {
             position: absolute;
-            top: 57%; /* 이글루 입구 위치에 맞게 미세조정 가능 */
+            top: 61%; /* 입구 위치에 맞게 하단으로 더 조정 */
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 72px;
-            height: 72px;
+            width: 68px;
+            height: 68px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 22px;
-            padding-left: 4px;
+            font-size: 20px;
+            padding-left: 3px;
             cursor: pointer;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 5;
             animation: floatGlow 3s infinite ease-in-out;
         }
 
-        /* 마우스를 올렸을 때 (불빛이 뿜어져 나오는 호버 효과) */
         .ice-portal-btn:hover {
             transform: translate(-50%, -50%) scale(1.15);
-            background: rgba(251, 191, 36, 0.25);
-            border-color: rgba(251, 191, 36, 0.9);
-            box-shadow: 0 0 50px rgba(251, 191, 36, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.8);
+            background: rgba(251, 191, 36, 0.28);
+            border-color: rgba(251, 191, 36, 0.95);
+            box-shadow: 0 0 50px rgba(251, 191, 36, 0.85), inset 0 0 20px rgba(255, 255, 255, 0.9);
             color: #fef3c7;
         }
 
         @keyframes floatGlow {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.3); }
-            50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.5); }
+            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4); }
+            50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.6); }
         }
 
-        /* 하단 캡션 */
         .hero-footer-text {
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 200;
             color: #94a3b8;
             letter-spacing: 1px;
             z-index: 2;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            margin-bottom: 10px;
         }
 
-        /* === 2. 이글루 내부 (포트폴리오 메인 화면) === */
+        /* === 2. 이글루 내부 (포트폴리오 메인) === */
         .main-app {
             opacity: 0;
             pointer-events: none;
@@ -170,13 +164,13 @@
 
         .logo {
             display: flex; align-items: center; gap: 10px; text-decoration: none;
-            color: #1e293b; font-size: 22px; font-weight: 700; font-family: var(--font-serif);
+            color: #1e293b; font-size: 20px; font-weight: 600; font-family: var(--font-serif);
         }
 
-        .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: #d97706; display: inline-block; }
+        .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: #d97706; display: inline-block; }
 
-        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; color: #334155; font-size: 15px; }
+        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; font-size: 14px; }
+        .nav-links a { text-decoration: none; color: #334155; }
         .nav-links a:hover { color: #d97706; }
 
         .btn-outside {
@@ -190,8 +184,8 @@
         .section-desc { font-size: 16px; color: #64748b; line-height: 1.8; }
 
         @media (max-width: 768px) {
-            .hero-main-text { font-size: 28px; }
-            .hero-sub-text { font-size: 13px; letter-spacing: 2px; }
+            .hero-main-text { font-size: 26px; }
+            .hero-sub-text { font-size: 11px; letter-spacing: 3px; }
             .header { padding: 16px 20px; }
         }
     </style>
@@ -201,33 +195,25 @@
     <!-- ❄️ 눈 내리는 캔버스 -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- ==============================================
-         1. 랜딩 화면 (고정 배경 + 2줄 타이틀 + 얼음 재생 버튼)
-         ============================================== -->
+    <!-- 1. 랜딩 화면 -->
     <div class="hero-screen" id="heroScreen">
         <div class="hero-overlay"></div>
 
-        <!-- 상단 2줄 텍스트 (윗줄 크게) -->
         <div class="hero-title-box">
             <h1 class="hero-main-text">Come in. Melt a little</h1>
             <p class="hero-sub-text">Igloo Film</p>
         </div>
 
-        <!-- 이글루 입구 위치의 투명 얼음 재생 버튼 -->
         <div class="ice-portal-btn" id="enterPortalBtn" title="이글루 안으로 들어가기">
             <i class="fa-solid fa-play"></i>
         </div>
 
-        <!-- 하단 작은 안내 문구 -->
         <div class="hero-footer-text">
             아이콘을 눌러 이글루 안으로 입장하세요
         </div>
     </div>
 
-
-    <!-- ==============================================
-         2. 이글루 내부 (포트폴리오 메인 화면)
-         ============================================== -->
+    <!-- 2. 이글루 내부 -->
     <div class="main-app" id="mainApp">
         <header class="header">
             <a href="#" class="logo">
@@ -253,7 +239,7 @@
     </div>
 
     <script>
-        // ❄️ 1. 부드러운 함박눈 내리는 자바스크립트 효과
+        // ❄️ 눈 내리기 효과 (크기를 키우고 반짝이도록 수정)
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -265,28 +251,26 @@
         resizeCanvas();
 
         const flakes = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 70; i++) {
             flakes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                r: Math.random() * 3.5 + 1, // 함박눈 크기
-                d: Math.random() * 1 + 0.5   // 떨어지는 속도
+                r: Math.random() * 4 + 1.5, // 눈송이 크기 키움
+                d: Math.random() * 1.2 + 0.6,
+                alpha: Math.random() * 0.5 + 0.5
             });
         }
 
         function drawSnow() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-            ctx.beginPath();
             flakes.forEach(f => {
-                ctx.moveTo(f.x, f.y);
+                ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
+                ctx.beginPath();
                 ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
-            });
-            ctx.fill();
+                ctx.fill();
 
-            flakes.forEach(f => {
-                f.y += Math.pow(f.d, 2) * 0.4 + 0.5;
-                f.x += Math.sin(f.y / 40) * 0.4;
+                f.y += Math.pow(f.d, 2) * 0.3 + 0.6;
+                f.x += Math.sin(f.y / 30) * 0.5;
                 if (f.y > canvas.height) {
                     f.y = -10;
                     f.x = Math.random() * canvas.width;
@@ -296,7 +280,7 @@
         }
         drawSnow();
 
-        // 🎬 2. 얼음 버튼 클릭 시 안으로 빨려 들어가는 인터랙션
+        // 🎬 페이지 전환 효과
         const enterBtn = document.getElementById('enterPortalBtn');
         const heroScreen = document.getElementById('heroScreen');
         const mainApp = document.getElementById('mainApp');
